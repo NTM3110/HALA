@@ -1,0 +1,261 @@
+ARM GAS  C:\Users\mdmt3\AppData\Local\Temp\cc8CG6OE.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"main.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.main,"ax",%progbits
+  18              		.align	1
+  19              		.global	main
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	main:
+  26              	.LFB131:
+  27              		.file 1 "Core/Src/main.c"
+   1:Core/Src/main.c **** #include <stdio.h>
+   2:Core/Src/main.c **** #include "stm32f407xx.h"
+   3:Core/Src/main.c **** 
+   4:Core/Src/main.c **** #define GPIOAEN                     (1U << 0)
+   5:Core/Src/main.c **** #define GPIODEN 					(1U << 3)
+   6:Core/Src/main.c **** 
+   7:Core/Src/main.c **** #define PIN0                        (1U << 0)
+   8:Core/Src/main.c **** #define PIN13                       (1U << 13)
+   9:Core/Src/main.c **** #define PIN12						(1U << 12)
+  10:Core/Src/main.c **** #define PIN14                       (1U << 14)
+  11:Core/Src/main.c **** 
+  12:Core/Src/main.c **** #define LED3_PIN                    PIN13
+  13:Core/Src/main.c **** #define LED4_PIN					PIN12
+  14:Core/Src/main.c **** #define LED5_PIN                    PIN14
+  15:Core/Src/main.c **** #define USER_BTN_PIN                PIN0
+  16:Core/Src/main.c **** 
+  17:Core/Src/main.c **** #define __IO      volatile
+  18:Core/Src/main.c **** /**
+  19:Core/Src/main.c ****  * Set output mode for pin 5
+  20:Core/Src/main.c ****  * (1U <<10) Set bit 10th to 1
+  21:Core/Src/main.c ****  * & = ~(1U<<11) //Set bit 11th to 0
+  22:Core/Src/main.c **** */
+  23:Core/Src/main.c **** //RCC_AHB1ENR_RCC_R = 0b0000 0000 00000 0000 1000 1111 0000 0001
+  24:Core/Src/main.c **** 
+  25:Core/Src/main.c **** int main(void)
+  26:Core/Src/main.c **** {
+  28              		.loc 1 26 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 10B5     		push	{r4, lr}
+ARM GAS  C:\Users\mdmt3\AppData\Local\Temp\cc8CG6OE.s 			page 2
+
+
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 4, -8
+  36              		.cfi_offset 14, -4
+  27:Core/Src/main.c ****     /**
+  28:Core/Src/main.c ****      * 1. Enable clock access to GPIOD
+  29:Core/Src/main.c ****      * 2. Set PD13 as output pin
+  30:Core/Src/main.c ****      * 3. Set PD13 as high
+  31:Core/Src/main.c ****     */
+  32:Core/Src/main.c ****    //1. Enable clock access to GPIOD and GPIOA
+  33:Core/Src/main.c ****    RCC->AHB1ENR |= GPIODEN;
+  37              		.loc 1 33 0
+  38 0002 2A4B     		ldr	r3, .L8
+  39 0004 1A6B     		ldr	r2, [r3, #48]
+  40 0006 42F00802 		orr	r2, r2, #8
+  41 000a 1A63     		str	r2, [r3, #48]
+  34:Core/Src/main.c ****    RCC->AHB1ENR |= GPIOAEN;
+  42              		.loc 1 34 0
+  43 000c 1A6B     		ldr	r2, [r3, #48]
+  44 000e 42F00102 		orr	r2, r2, #1
+  45 0012 1A63     		str	r2, [r3, #48]
+  35:Core/Src/main.c **** 
+  36:Core/Src/main.c ****    //2. Set PD13 as output pin (LED3)
+  37:Core/Src/main.c ****    GPIOD->MODER |= (1U << 26);
+  46              		.loc 1 37 0
+  47 0014 A3F53053 		sub	r3, r3, #11264
+  48 0018 1A68     		ldr	r2, [r3]
+  49 001a 42F08062 		orr	r2, r2, #67108864
+  50 001e 1A60     		str	r2, [r3]
+  38:Core/Src/main.c ****    GPIOD->MODER &= ~(1U <<27);
+  51              		.loc 1 38 0
+  52 0020 1A68     		ldr	r2, [r3]
+  53 0022 22F00062 		bic	r2, r2, #134217728
+  54 0026 1A60     		str	r2, [r3]
+  39:Core/Src/main.c **** 
+  40:Core/Src/main.c ****     //3. Set PD12 as output pin (LED4)
+  41:Core/Src/main.c ****    GPIOD->MODER |= (1U << 24);
+  55              		.loc 1 41 0
+  56 0028 1A68     		ldr	r2, [r3]
+  57 002a 42F08072 		orr	r2, r2, #16777216
+  58 002e 1A60     		str	r2, [r3]
+  42:Core/Src/main.c ****    GPIOD->MODER &= ~(1U <<25);
+  59              		.loc 1 42 0
+  60 0030 1A68     		ldr	r2, [r3]
+  61 0032 22F00072 		bic	r2, r2, #33554432
+  62 0036 1A60     		str	r2, [r3]
+  43:Core/Src/main.c **** 
+  44:Core/Src/main.c ****    GPIOD->MODER |= (1U << 28);
+  63              		.loc 1 44 0
+  64 0038 1A68     		ldr	r2, [r3]
+  65 003a 42F08052 		orr	r2, r2, #268435456
+  66 003e 1A60     		str	r2, [r3]
+  45:Core/Src/main.c ****    GPIOD->MODER &= ~(1U << 29);
+  67              		.loc 1 45 0
+  68 0040 1A68     		ldr	r2, [r3]
+  69 0042 22F00052 		bic	r2, r2, #536870912
+  70 0046 1A60     		str	r2, [r3]
+ARM GAS  C:\Users\mdmt3\AppData\Local\Temp\cc8CG6OE.s 			page 3
+
+
+  46:Core/Src/main.c **** 
+  47:Core/Src/main.c ****     //4. Set PA0 as input pin (USER_BTN)
+  48:Core/Src/main.c ****    GPIOA->MODER &= ~(1U << 0);
+  71              		.loc 1 48 0
+  72 0048 A3F54063 		sub	r3, r3, #3072
+  73 004c 1A68     		ldr	r2, [r3]
+  74 004e 22F00102 		bic	r2, r2, #1
+  75 0052 1A60     		str	r2, [r3]
+  49:Core/Src/main.c ****    GPIOA->MODER &= ~(1U << 1);
+  76              		.loc 1 49 0
+  77 0054 1A68     		ldr	r2, [r3]
+  78 0056 22F00202 		bic	r2, r2, #2
+  79 005a 1A60     		str	r2, [r3]
+  80 005c 1AE0     		b	.L6
+  81              	.LVL0:
+  82              	.L3:
+  50:Core/Src/main.c **** 	 int i;
+  51:Core/Src/main.c **** 
+  52:Core/Src/main.c ****    while (1){
+  53:Core/Src/main.c **** 
+  54:Core/Src/main.c **** 	//if(GPIOA->IDR & USER_BTN_PIN){
+  55:Core/Src/main.c **** 
+  56:Core/Src/main.c **** 	//}
+  57:Core/Src/main.c **** 		GPIOD->ODR |= LED3_PIN;
+  58:Core/Src/main.c **** 		GPIOD->ODR |= LED5_PIN;
+  59:Core/Src/main.c **** 		for(i=0 ; i < 20000; i++){
+  60:Core/Src/main.c **** 			printf("Hello World");
+  83              		.loc 1 60 0 discriminator 3
+  84 005e 1448     		ldr	r0, .L8+4
+  85 0060 FFF7FEFF 		bl	printf
+  86              	.LVL1:
+  59:Core/Src/main.c **** 			printf("Hello World");
+  87              		.loc 1 59 0 discriminator 3
+  88 0064 0134     		adds	r4, r4, #1
+  89              	.LVL2:
+  90              	.L2:
+  59:Core/Src/main.c **** 			printf("Hello World");
+  91              		.loc 1 59 0 is_stmt 0 discriminator 1
+  92 0066 44F61F63 		movw	r3, #19999
+  93 006a 9C42     		cmp	r4, r3
+  94 006c F7DD     		ble	.L3
+  61:Core/Src/main.c **** 		}
+  62:Core/Src/main.c **** 		GPIOD->ODR &= ~LED3_PIN;
+  95              		.loc 1 62 0 is_stmt 1
+  96 006e 114B     		ldr	r3, .L8+8
+  97 0070 5A69     		ldr	r2, [r3, #20]
+  98 0072 22F40052 		bic	r2, r2, #8192
+  99 0076 5A61     		str	r2, [r3, #20]
+  63:Core/Src/main.c **** 		GPIOD->ODR &= ~LED5_PIN;
+ 100              		.loc 1 63 0
+ 101 0078 5A69     		ldr	r2, [r3, #20]
+ 102 007a 22F48042 		bic	r2, r2, #16384
+ 103 007e 5A61     		str	r2, [r3, #20]
+ 104              	.LVL3:
+  64:Core/Src/main.c **** 		for(i=0 ; i < 20000; i++){
+ 105              		.loc 1 64 0
+ 106 0080 0024     		movs	r4, #0
+ARM GAS  C:\Users\mdmt3\AppData\Local\Temp\cc8CG6OE.s 			page 4
+
+
+ 107 0082 03E0     		b	.L4
+ 108              	.LVL4:
+ 109              	.L5:
+  65:Core/Src/main.c **** 			printf("Hello World");
+ 110              		.loc 1 65 0 discriminator 3
+ 111 0084 0A48     		ldr	r0, .L8+4
+ 112 0086 FFF7FEFF 		bl	printf
+ 113              	.LVL5:
+  64:Core/Src/main.c **** 		for(i=0 ; i < 20000; i++){
+ 114              		.loc 1 64 0 discriminator 3
+ 115 008a 0134     		adds	r4, r4, #1
+ 116              	.LVL6:
+ 117              	.L4:
+  64:Core/Src/main.c **** 		for(i=0 ; i < 20000; i++){
+ 118              		.loc 1 64 0 is_stmt 0 discriminator 1
+ 119 008c 44F61F63 		movw	r3, #19999
+ 120 0090 9C42     		cmp	r4, r3
+ 121 0092 F7DD     		ble	.L5
+ 122              	.LVL7:
+ 123              	.L6:
+  57:Core/Src/main.c **** 		GPIOD->ODR |= LED5_PIN;
+ 124              		.loc 1 57 0 is_stmt 1
+ 125 0094 074B     		ldr	r3, .L8+8
+ 126 0096 5A69     		ldr	r2, [r3, #20]
+ 127 0098 42F40052 		orr	r2, r2, #8192
+ 128 009c 5A61     		str	r2, [r3, #20]
+  58:Core/Src/main.c **** 		for(i=0 ; i < 20000; i++){
+ 129              		.loc 1 58 0
+ 130 009e 5A69     		ldr	r2, [r3, #20]
+ 131 00a0 42F48042 		orr	r2, r2, #16384
+ 132 00a4 5A61     		str	r2, [r3, #20]
+ 133              	.LVL8:
+  59:Core/Src/main.c **** 			printf("Hello World");
+ 134              		.loc 1 59 0
+ 135 00a6 0024     		movs	r4, #0
+ 136 00a8 DDE7     		b	.L2
+ 137              	.L9:
+ 138 00aa 00BF     		.align	2
+ 139              	.L8:
+ 140 00ac 00380240 		.word	1073887232
+ 141 00b0 00000000 		.word	.LC0
+ 142 00b4 000C0240 		.word	1073875968
+ 143              		.cfi_endproc
+ 144              	.LFE131:
+ 146              		.section	.rodata.main.str1.4,"aMS",%progbits,1
+ 147              		.align	2
+ 148              	.LC0:
+ 149 0000 48656C6C 		.ascii	"Hello World\000"
+ 149      6F20576F 
+ 149      726C6400 
+ 150              		.text
+ 151              	.Letext0:
+ 152              		.file 2 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\arm-none-eabi\\include
+ 153              		.file 3 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\arm-none-eabi\\include
+ 154              		.file 4 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\arm-none-eabi\\include
+ 155              		.file 5 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\lib\\gcc\\arm-none-eab
+ 156              		.file 6 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\arm-none-eabi\\include
+ARM GAS  C:\Users\mdmt3\AppData\Local\Temp\cc8CG6OE.s 			page 5
+
+
+ 157              		.file 7 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\arm-none-eabi\\include
+ 158              		.file 8 "Drivers/CMSIS/Include/core_cm4.h"
+ 159              		.file 9 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
+ 160              		.file 10 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h"
+ 161              		.file 11 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\arm-none-eabi\\includ
+ARM GAS  C:\Users\mdmt3\AppData\Local\Temp\cc8CG6OE.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 main.c
+C:\Users\mdmt3\AppData\Local\Temp\cc8CG6OE.s:18     .text.main:00000000 $t
+C:\Users\mdmt3\AppData\Local\Temp\cc8CG6OE.s:25     .text.main:00000000 main
+C:\Users\mdmt3\AppData\Local\Temp\cc8CG6OE.s:140    .text.main:000000ac $d
+C:\Users\mdmt3\AppData\Local\Temp\cc8CG6OE.s:147    .rodata.main.str1.4:00000000 $d
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+printf

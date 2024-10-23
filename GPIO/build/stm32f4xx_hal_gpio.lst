@@ -1,0 +1,1455 @@
+ARM GAS  C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"stm32f4xx_hal_gpio.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.HAL_GPIO_Init,"ax",%progbits
+  18              		.align	1
+  19              		.global	HAL_GPIO_Init
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	HAL_GPIO_Init:
+  26              	.LFB130:
+  27              		.file 1 "Core/Src/stm32f4xx_hal_gpio.c"
+   1:Core/Src/stm32f4xx_hal_gpio.c **** /**
+   2:Core/Src/stm32f4xx_hal_gpio.c ****   ******************************************************************************
+   3:Core/Src/stm32f4xx_hal_gpio.c ****   * @file    stm32f4xx_hal_gpio.c
+   4:Core/Src/stm32f4xx_hal_gpio.c ****   * @author  MCD Application Team
+   5:Core/Src/stm32f4xx_hal_gpio.c ****   * @brief   GPIO HAL module driver.
+   6:Core/Src/stm32f4xx_hal_gpio.c ****   *          This file provides firmware functions to manage the following 
+   7:Core/Src/stm32f4xx_hal_gpio.c ****   *          functionalities of the General Purpose Input/Output (GPIO) peripheral:
+   8:Core/Src/stm32f4xx_hal_gpio.c ****   *           + Initialization and de-initialization functions
+   9:Core/Src/stm32f4xx_hal_gpio.c ****   *           + IO operation functions
+  10:Core/Src/stm32f4xx_hal_gpio.c ****   *
+  11:Core/Src/stm32f4xx_hal_gpio.c ****   ******************************************************************************
+  12:Core/Src/stm32f4xx_hal_gpio.c ****   * @attention
+  13:Core/Src/stm32f4xx_hal_gpio.c ****   *
+  14:Core/Src/stm32f4xx_hal_gpio.c ****   * Copyright (c) 2017 STMicroelectronics.
+  15:Core/Src/stm32f4xx_hal_gpio.c ****   * All rights reserved.
+  16:Core/Src/stm32f4xx_hal_gpio.c ****   *
+  17:Core/Src/stm32f4xx_hal_gpio.c ****   * This software is licensed under terms that can be found in the LICENSE file
+  18:Core/Src/stm32f4xx_hal_gpio.c ****   * in the root directory of this software component.
+  19:Core/Src/stm32f4xx_hal_gpio.c ****   * If no LICENSE file comes with this software, it is provided AS-IS.
+  20:Core/Src/stm32f4xx_hal_gpio.c ****   *
+  21:Core/Src/stm32f4xx_hal_gpio.c ****   ******************************************************************************
+  22:Core/Src/stm32f4xx_hal_gpio.c ****   @verbatim
+  23:Core/Src/stm32f4xx_hal_gpio.c ****   ==============================================================================
+  24:Core/Src/stm32f4xx_hal_gpio.c ****                     ##### GPIO Peripheral features #####
+  25:Core/Src/stm32f4xx_hal_gpio.c ****   ==============================================================================
+  26:Core/Src/stm32f4xx_hal_gpio.c ****   [..] 
+  27:Core/Src/stm32f4xx_hal_gpio.c ****   Subject to the specific hardware characteristics of each I/O port listed in the datasheet, each
+  28:Core/Src/stm32f4xx_hal_gpio.c ****   port bit of the General Purpose IO (GPIO) Ports, can be individually configured by software
+  29:Core/Src/stm32f4xx_hal_gpio.c ****   in several modes:
+  30:Core/Src/stm32f4xx_hal_gpio.c ****   (+) Input mode 
+  31:Core/Src/stm32f4xx_hal_gpio.c ****   (+) Analog mode
+ARM GAS  C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s 			page 2
+
+
+  32:Core/Src/stm32f4xx_hal_gpio.c ****   (+) Output mode
+  33:Core/Src/stm32f4xx_hal_gpio.c ****   (+) Alternate function mode
+  34:Core/Src/stm32f4xx_hal_gpio.c ****   (+) External interrupt/event lines
+  35:Core/Src/stm32f4xx_hal_gpio.c **** 
+  36:Core/Src/stm32f4xx_hal_gpio.c ****   [..]  
+  37:Core/Src/stm32f4xx_hal_gpio.c ****   During and just after reset, the alternate functions and external interrupt  
+  38:Core/Src/stm32f4xx_hal_gpio.c ****   lines are not active and the I/O ports are configured in input floating mode.
+  39:Core/Src/stm32f4xx_hal_gpio.c ****   
+  40:Core/Src/stm32f4xx_hal_gpio.c ****   [..]   
+  41:Core/Src/stm32f4xx_hal_gpio.c ****   All GPIO pins have weak internal pull-up and pull-down resistors, which can be 
+  42:Core/Src/stm32f4xx_hal_gpio.c ****   activated or not.
+  43:Core/Src/stm32f4xx_hal_gpio.c **** 
+  44:Core/Src/stm32f4xx_hal_gpio.c ****   [..]
+  45:Core/Src/stm32f4xx_hal_gpio.c ****   In Output or Alternate mode, each IO can be configured on open-drain or push-pull
+  46:Core/Src/stm32f4xx_hal_gpio.c ****   type and the IO speed can be selected depending on the VDD value.
+  47:Core/Src/stm32f4xx_hal_gpio.c **** 
+  48:Core/Src/stm32f4xx_hal_gpio.c ****   [..]  
+  49:Core/Src/stm32f4xx_hal_gpio.c ****   All ports have external interrupt/event capability. To use external interrupt 
+  50:Core/Src/stm32f4xx_hal_gpio.c ****   lines, the port must be configured in input mode. All available GPIO pins are 
+  51:Core/Src/stm32f4xx_hal_gpio.c ****   connected to the 16 external interrupt/event lines from EXTI0 to EXTI15.
+  52:Core/Src/stm32f4xx_hal_gpio.c ****   
+  53:Core/Src/stm32f4xx_hal_gpio.c ****   [..]
+  54:Core/Src/stm32f4xx_hal_gpio.c ****   The external interrupt/event controller consists of up to 23 edge detectors 
+  55:Core/Src/stm32f4xx_hal_gpio.c ****   (16 lines are connected to GPIO) for generating event/interrupt requests (each 
+  56:Core/Src/stm32f4xx_hal_gpio.c ****   input line can be independently configured to select the type (interrupt or event) 
+  57:Core/Src/stm32f4xx_hal_gpio.c ****   and the corresponding trigger event (rising or falling or both). Each line can 
+  58:Core/Src/stm32f4xx_hal_gpio.c ****   also be masked independently. 
+  59:Core/Src/stm32f4xx_hal_gpio.c **** 
+  60:Core/Src/stm32f4xx_hal_gpio.c ****                      ##### How to use this driver #####
+  61:Core/Src/stm32f4xx_hal_gpio.c ****   ==============================================================================  
+  62:Core/Src/stm32f4xx_hal_gpio.c ****   [..]
+  63:Core/Src/stm32f4xx_hal_gpio.c ****     (#) Enable the GPIO AHB clock using the following function: __HAL_RCC_GPIOx_CLK_ENABLE(). 
+  64:Core/Src/stm32f4xx_hal_gpio.c **** 
+  65:Core/Src/stm32f4xx_hal_gpio.c ****     (#) Configure the GPIO pin(s) using HAL_GPIO_Init().
+  66:Core/Src/stm32f4xx_hal_gpio.c ****         (++) Configure the IO mode using "Mode" member from GPIO_InitTypeDef structure
+  67:Core/Src/stm32f4xx_hal_gpio.c ****         (++) Activate Pull-up, Pull-down resistor using "Pull" member from GPIO_InitTypeDef 
+  68:Core/Src/stm32f4xx_hal_gpio.c ****              structure.
+  69:Core/Src/stm32f4xx_hal_gpio.c ****         (++) In case of Output or alternate function mode selection: the speed is 
+  70:Core/Src/stm32f4xx_hal_gpio.c ****              configured through "Speed" member from GPIO_InitTypeDef structure.
+  71:Core/Src/stm32f4xx_hal_gpio.c ****         (++) In alternate mode is selection, the alternate function connected to the IO
+  72:Core/Src/stm32f4xx_hal_gpio.c ****              is configured through "Alternate" member from GPIO_InitTypeDef structure.
+  73:Core/Src/stm32f4xx_hal_gpio.c ****         (++) Analog mode is required when a pin is to be used as ADC channel 
+  74:Core/Src/stm32f4xx_hal_gpio.c ****              or DAC output.
+  75:Core/Src/stm32f4xx_hal_gpio.c ****         (++) In case of external interrupt/event selection the "Mode" member from 
+  76:Core/Src/stm32f4xx_hal_gpio.c ****              GPIO_InitTypeDef structure select the type (interrupt or event) and 
+  77:Core/Src/stm32f4xx_hal_gpio.c ****              the corresponding trigger event (rising or falling or both).
+  78:Core/Src/stm32f4xx_hal_gpio.c **** 
+  79:Core/Src/stm32f4xx_hal_gpio.c ****     (#) In case of external interrupt/event mode selection, configure NVIC IRQ priority 
+  80:Core/Src/stm32f4xx_hal_gpio.c ****         mapped to the EXTI line using HAL_NVIC_SetPriority() and enable it using
+  81:Core/Src/stm32f4xx_hal_gpio.c ****         HAL_NVIC_EnableIRQ().
+  82:Core/Src/stm32f4xx_hal_gpio.c ****          
+  83:Core/Src/stm32f4xx_hal_gpio.c ****     (#) To get the level of a pin configured in input mode use HAL_GPIO_ReadPin().
+  84:Core/Src/stm32f4xx_hal_gpio.c ****             
+  85:Core/Src/stm32f4xx_hal_gpio.c ****     (#) To set/reset the level of a pin configured in output mode use 
+  86:Core/Src/stm32f4xx_hal_gpio.c ****         HAL_GPIO_WritePin()/HAL_GPIO_TogglePin().
+  87:Core/Src/stm32f4xx_hal_gpio.c ****     
+  88:Core/Src/stm32f4xx_hal_gpio.c ****     (#) To lock pin configuration until next reset use HAL_GPIO_LockPin().
+ARM GAS  C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s 			page 3
+
+
+  89:Core/Src/stm32f4xx_hal_gpio.c **** 
+  90:Core/Src/stm32f4xx_hal_gpio.c ****                  
+  91:Core/Src/stm32f4xx_hal_gpio.c ****     (#) During and just after reset, the alternate functions are not 
+  92:Core/Src/stm32f4xx_hal_gpio.c ****         active and the GPIO pins are configured in input floating mode (except JTAG
+  93:Core/Src/stm32f4xx_hal_gpio.c ****         pins).
+  94:Core/Src/stm32f4xx_hal_gpio.c ****   
+  95:Core/Src/stm32f4xx_hal_gpio.c ****     (#) The LSE oscillator pins OSC32_IN and OSC32_OUT can be used as general purpose 
+  96:Core/Src/stm32f4xx_hal_gpio.c ****         (PC14 and PC15, respectively) when the LSE oscillator is off. The LSE has 
+  97:Core/Src/stm32f4xx_hal_gpio.c ****         priority over the GPIO function.
+  98:Core/Src/stm32f4xx_hal_gpio.c ****   
+  99:Core/Src/stm32f4xx_hal_gpio.c ****     (#) The HSE oscillator pins OSC_IN/OSC_OUT can be used as 
+ 100:Core/Src/stm32f4xx_hal_gpio.c ****         general purpose PH0 and PH1, respectively, when the HSE oscillator is off. 
+ 101:Core/Src/stm32f4xx_hal_gpio.c ****         The HSE has priority over the GPIO function.
+ 102:Core/Src/stm32f4xx_hal_gpio.c ****   
+ 103:Core/Src/stm32f4xx_hal_gpio.c ****   @endverbatim
+ 104:Core/Src/stm32f4xx_hal_gpio.c ****   ******************************************************************************
+ 105:Core/Src/stm32f4xx_hal_gpio.c ****   */ 
+ 106:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 107:Core/Src/stm32f4xx_hal_gpio.c **** /* Includes ------------------------------------------------------------------*/
+ 108:Core/Src/stm32f4xx_hal_gpio.c **** #include "stm32f4xx_hal.h"
+ 109:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 110:Core/Src/stm32f4xx_hal_gpio.c **** /** @addtogroup STM32F4xx_HAL_Driver
+ 111:Core/Src/stm32f4xx_hal_gpio.c ****   * @{
+ 112:Core/Src/stm32f4xx_hal_gpio.c ****   */
+ 113:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 114:Core/Src/stm32f4xx_hal_gpio.c **** /** @defgroup GPIO GPIO
+ 115:Core/Src/stm32f4xx_hal_gpio.c ****   * @brief GPIO HAL module driver
+ 116:Core/Src/stm32f4xx_hal_gpio.c ****   * @{
+ 117:Core/Src/stm32f4xx_hal_gpio.c ****   */
+ 118:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 119:Core/Src/stm32f4xx_hal_gpio.c **** #ifdef HAL_GPIO_MODULE_ENABLED
+ 120:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 121:Core/Src/stm32f4xx_hal_gpio.c **** /* Private typedef -----------------------------------------------------------*/
+ 122:Core/Src/stm32f4xx_hal_gpio.c **** /* Private define ------------------------------------------------------------*/
+ 123:Core/Src/stm32f4xx_hal_gpio.c **** /** @addtogroup GPIO_Private_Constants GPIO Private Constants
+ 124:Core/Src/stm32f4xx_hal_gpio.c ****   * @{
+ 125:Core/Src/stm32f4xx_hal_gpio.c ****   */
+ 126:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 127:Core/Src/stm32f4xx_hal_gpio.c **** #define GPIO_NUMBER           16U
+ 128:Core/Src/stm32f4xx_hal_gpio.c **** /**
+ 129:Core/Src/stm32f4xx_hal_gpio.c ****   * @}
+ 130:Core/Src/stm32f4xx_hal_gpio.c ****   */
+ 131:Core/Src/stm32f4xx_hal_gpio.c **** /* Private macro -------------------------------------------------------------*/
+ 132:Core/Src/stm32f4xx_hal_gpio.c **** /* Private variables ---------------------------------------------------------*/
+ 133:Core/Src/stm32f4xx_hal_gpio.c **** /* Private function prototypes -----------------------------------------------*/
+ 134:Core/Src/stm32f4xx_hal_gpio.c **** /* Private functions ---------------------------------------------------------*/
+ 135:Core/Src/stm32f4xx_hal_gpio.c **** /* Exported functions --------------------------------------------------------*/
+ 136:Core/Src/stm32f4xx_hal_gpio.c **** /** @defgroup GPIO_Exported_Functions GPIO Exported Functions
+ 137:Core/Src/stm32f4xx_hal_gpio.c ****   * @{
+ 138:Core/Src/stm32f4xx_hal_gpio.c ****   */
+ 139:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 140:Core/Src/stm32f4xx_hal_gpio.c **** /** @defgroup GPIO_Exported_Functions_Group1 Initialization and de-initialization functions
+ 141:Core/Src/stm32f4xx_hal_gpio.c ****   *  @brief    Initialization and Configuration functions
+ 142:Core/Src/stm32f4xx_hal_gpio.c ****   *
+ 143:Core/Src/stm32f4xx_hal_gpio.c **** @verbatim    
+ 144:Core/Src/stm32f4xx_hal_gpio.c ****  ===============================================================================
+ 145:Core/Src/stm32f4xx_hal_gpio.c ****               ##### Initialization and de-initialization functions #####
+ARM GAS  C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s 			page 4
+
+
+ 146:Core/Src/stm32f4xx_hal_gpio.c ****  ===============================================================================
+ 147:Core/Src/stm32f4xx_hal_gpio.c ****   [..]
+ 148:Core/Src/stm32f4xx_hal_gpio.c ****     This section provides functions allowing to initialize and de-initialize the GPIOs
+ 149:Core/Src/stm32f4xx_hal_gpio.c ****     to be ready for use.
+ 150:Core/Src/stm32f4xx_hal_gpio.c ****  
+ 151:Core/Src/stm32f4xx_hal_gpio.c **** @endverbatim
+ 152:Core/Src/stm32f4xx_hal_gpio.c ****   * @{
+ 153:Core/Src/stm32f4xx_hal_gpio.c ****   */
+ 154:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 155:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 156:Core/Src/stm32f4xx_hal_gpio.c **** /**
+ 157:Core/Src/stm32f4xx_hal_gpio.c ****   * @brief  Initializes the GPIOx peripheral according to the specified parameters in the GPIO_Init
+ 158:Core/Src/stm32f4xx_hal_gpio.c ****   * @param  GPIOx where x can be (A..K) to select the GPIO peripheral for STM32F429X device or
+ 159:Core/Src/stm32f4xx_hal_gpio.c ****   *                      x can be (A..I) to select the GPIO peripheral for STM32F40XX and STM32F427
+ 160:Core/Src/stm32f4xx_hal_gpio.c ****   * @param  GPIO_Init pointer to a GPIO_InitTypeDef structure that contains
+ 161:Core/Src/stm32f4xx_hal_gpio.c ****   *         the configuration information for the specified GPIO peripheral.
+ 162:Core/Src/stm32f4xx_hal_gpio.c ****   * @retval None
+ 163:Core/Src/stm32f4xx_hal_gpio.c ****   */
+ 164:Core/Src/stm32f4xx_hal_gpio.c **** void HAL_GPIO_Init(GPIO_TypeDef  *GPIOx, GPIO_InitTypeDef *GPIO_Init)
+ 165:Core/Src/stm32f4xx_hal_gpio.c **** {
+  28              		.loc 1 165 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              	.LVL0:
+  33 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 24
+  36              		.cfi_offset 3, -24
+  37              		.cfi_offset 4, -20
+  38              		.cfi_offset 5, -16
+  39              		.cfi_offset 6, -12
+  40              		.cfi_offset 7, -8
+  41              		.cfi_offset 14, -4
+  42 0002 0746     		mov	r7, r0
+  43 0004 0E46     		mov	r6, r1
+  44              	.LVL1:
+ 166:Core/Src/stm32f4xx_hal_gpio.c ****   uint32_t position;
+ 167:Core/Src/stm32f4xx_hal_gpio.c ****   uint32_t ioposition = 0x00U;
+ 168:Core/Src/stm32f4xx_hal_gpio.c ****   uint32_t iocurrent = 0x00U;
+ 169:Core/Src/stm32f4xx_hal_gpio.c ****   uint32_t temp = 0x00U;
+ 170:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 171:Core/Src/stm32f4xx_hal_gpio.c ****   /* Check the parameters */
+ 172:Core/Src/stm32f4xx_hal_gpio.c ****   assert_param(IS_GPIO_ALL_INSTANCE(GPIOx));
+ 173:Core/Src/stm32f4xx_hal_gpio.c ****   assert_param(IS_GPIO_PIN(GPIO_Init->Pin));
+ 174:Core/Src/stm32f4xx_hal_gpio.c ****   assert_param(IS_GPIO_MODE(GPIO_Init->Mode));
+ 175:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 176:Core/Src/stm32f4xx_hal_gpio.c ****   /* Configure the port pins */
+ 177:Core/Src/stm32f4xx_hal_gpio.c ****   for(position = 0U; position < GPIO_NUMBER; position++)
+  45              		.loc 1 177 0
+  46 0006 0024     		movs	r4, #0
+  47 0008 60E0     		b	.L2
+  48              	.LVL2:
+  49              	.L23:
+ 178:Core/Src/stm32f4xx_hal_gpio.c ****   {
+ 179:Core/Src/stm32f4xx_hal_gpio.c ****     /* Get the IO position */
+ 180:Core/Src/stm32f4xx_hal_gpio.c ****     ioposition = 0x01U << position;
+ARM GAS  C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s 			page 5
+
+
+ 181:Core/Src/stm32f4xx_hal_gpio.c ****     /* Get the current IO position */
+ 182:Core/Src/stm32f4xx_hal_gpio.c ****     iocurrent = (uint32_t)(GPIO_Init->Pin) & ioposition;
+ 183:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 184:Core/Src/stm32f4xx_hal_gpio.c ****     if(iocurrent == ioposition)
+ 185:Core/Src/stm32f4xx_hal_gpio.c ****     {
+ 186:Core/Src/stm32f4xx_hal_gpio.c ****       /*--------------------- GPIO Mode Configuration ------------------------*/
+ 187:Core/Src/stm32f4xx_hal_gpio.c ****       /* In case of Output or Alternate function mode selection */
+ 188:Core/Src/stm32f4xx_hal_gpio.c ****       if(((GPIO_Init->Mode & GPIO_MODE) == MODE_OUTPUT) || \
+ 189:Core/Src/stm32f4xx_hal_gpio.c ****           (GPIO_Init->Mode & GPIO_MODE) == MODE_AF)
+ 190:Core/Src/stm32f4xx_hal_gpio.c ****       {
+ 191:Core/Src/stm32f4xx_hal_gpio.c ****         /* Check the Speed parameter */
+ 192:Core/Src/stm32f4xx_hal_gpio.c ****         assert_param(IS_GPIO_SPEED(GPIO_Init->Speed));
+ 193:Core/Src/stm32f4xx_hal_gpio.c ****         /* Configure the IO Speed */
+ 194:Core/Src/stm32f4xx_hal_gpio.c ****         temp = GPIOx->OSPEEDR; 
+  50              		.loc 1 194 0
+  51 000a BA68     		ldr	r2, [r7, #8]
+  52              	.LVL3:
+ 195:Core/Src/stm32f4xx_hal_gpio.c ****         temp &= ~(GPIO_OSPEEDER_OSPEEDR0 << (position * 2U));
+  53              		.loc 1 195 0
+  54 000c 4FEA440E 		lsl	lr, r4, #1
+  55 0010 0320     		movs	r0, #3
+  56 0012 00FA0EF0 		lsl	r0, r0, lr
+  57 0016 22EA0002 		bic	r2, r2, r0
+  58              	.LVL4:
+ 196:Core/Src/stm32f4xx_hal_gpio.c ****         temp |= (GPIO_Init->Speed << (position * 2U));
+  59              		.loc 1 196 0
+  60 001a F168     		ldr	r1, [r6, #12]
+  61 001c 01FA0EF1 		lsl	r1, r1, lr
+  62 0020 0A43     		orrs	r2, r2, r1
+  63              	.LVL5:
+ 197:Core/Src/stm32f4xx_hal_gpio.c ****         GPIOx->OSPEEDR = temp;
+  64              		.loc 1 197 0
+  65 0022 BA60     		str	r2, [r7, #8]
+ 198:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 199:Core/Src/stm32f4xx_hal_gpio.c ****         /* Configure the IO Output Type */
+ 200:Core/Src/stm32f4xx_hal_gpio.c ****         temp = GPIOx->OTYPER;
+  66              		.loc 1 200 0
+  67 0024 7A68     		ldr	r2, [r7, #4]
+  68              	.LVL6:
+ 201:Core/Src/stm32f4xx_hal_gpio.c ****         temp &= ~(GPIO_OTYPER_OT_0 << position) ;
+  69              		.loc 1 201 0
+  70 0026 22EA0303 		bic	r3, r2, r3
+  71              	.LVL7:
+ 202:Core/Src/stm32f4xx_hal_gpio.c ****         temp |= (((GPIO_Init->Mode & OUTPUT_TYPE) >> OUTPUT_TYPE_Pos) << position);
+  72              		.loc 1 202 0
+  73 002a 7268     		ldr	r2, [r6, #4]
+  74 002c C2F30012 		ubfx	r2, r2, #4, #1
+  75 0030 A240     		lsls	r2, r2, r4
+  76 0032 1343     		orrs	r3, r3, r2
+  77              	.LVL8:
+ 203:Core/Src/stm32f4xx_hal_gpio.c ****         GPIOx->OTYPER = temp;
+  78              		.loc 1 203 0
+  79 0034 7B60     		str	r3, [r7, #4]
+  80 0036 58E0     		b	.L4
+  81              	.LVL9:
+  82              	.L24:
+ 204:Core/Src/stm32f4xx_hal_gpio.c ****        }
+ARM GAS  C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s 			page 6
+
+
+ 205:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 206:Core/Src/stm32f4xx_hal_gpio.c ****       if((GPIO_Init->Mode & GPIO_MODE) != MODE_ANALOG)
+ 207:Core/Src/stm32f4xx_hal_gpio.c ****       {
+ 208:Core/Src/stm32f4xx_hal_gpio.c ****         /* Check the parameters */
+ 209:Core/Src/stm32f4xx_hal_gpio.c ****         assert_param(IS_GPIO_PULL(GPIO_Init->Pull));
+ 210:Core/Src/stm32f4xx_hal_gpio.c ****         
+ 211:Core/Src/stm32f4xx_hal_gpio.c ****         /* Activate the Pull-up or Pull down resistor for the current IO */
+ 212:Core/Src/stm32f4xx_hal_gpio.c ****         temp = GPIOx->PUPDR;
+ 213:Core/Src/stm32f4xx_hal_gpio.c ****         temp &= ~(GPIO_PUPDR_PUPDR0 << (position * 2U));
+ 214:Core/Src/stm32f4xx_hal_gpio.c ****         temp |= ((GPIO_Init->Pull) << (position * 2U));
+ 215:Core/Src/stm32f4xx_hal_gpio.c ****         GPIOx->PUPDR = temp;
+ 216:Core/Src/stm32f4xx_hal_gpio.c ****       }
+ 217:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 218:Core/Src/stm32f4xx_hal_gpio.c ****       /* In case of Alternate function mode selection */
+ 219:Core/Src/stm32f4xx_hal_gpio.c ****       if((GPIO_Init->Mode & GPIO_MODE) == MODE_AF)
+ 220:Core/Src/stm32f4xx_hal_gpio.c ****       {
+ 221:Core/Src/stm32f4xx_hal_gpio.c ****         /* Check the Alternate function parameter */
+ 222:Core/Src/stm32f4xx_hal_gpio.c ****         assert_param(IS_GPIO_AF(GPIO_Init->Alternate));
+ 223:Core/Src/stm32f4xx_hal_gpio.c ****         /* Configure Alternate function mapped with the current IO */
+ 224:Core/Src/stm32f4xx_hal_gpio.c ****         temp = GPIOx->AFR[position >> 3U];
+  83              		.loc 1 224 0
+  84 0038 E208     		lsrs	r2, r4, #3
+  85 003a 0832     		adds	r2, r2, #8
+  86 003c 57F82230 		ldr	r3, [r7, r2, lsl #2]
+  87              	.LVL10:
+ 225:Core/Src/stm32f4xx_hal_gpio.c ****         temp &= ~(0xFU << ((uint32_t)(position & 0x07U) * 4U)) ;
+  88              		.loc 1 225 0
+  89 0040 04F00701 		and	r1, r4, #7
+  90 0044 8900     		lsls	r1, r1, #2
+  91 0046 0F20     		movs	r0, #15
+  92 0048 8840     		lsls	r0, r0, r1
+  93 004a 23EA0003 		bic	r3, r3, r0
+  94              	.LVL11:
+ 226:Core/Src/stm32f4xx_hal_gpio.c ****         temp |= ((uint32_t)(GPIO_Init->Alternate) << (((uint32_t)position & 0x07U) * 4U));
+  95              		.loc 1 226 0
+  96 004e 3069     		ldr	r0, [r6, #16]
+  97 0050 00FA01F1 		lsl	r1, r0, r1
+  98 0054 0B43     		orrs	r3, r3, r1
+  99              	.LVL12:
+ 227:Core/Src/stm32f4xx_hal_gpio.c ****         GPIOx->AFR[position >> 3U] = temp;
+ 100              		.loc 1 227 0
+ 101 0056 47F82230 		str	r3, [r7, r2, lsl #2]
+ 102 005a 5AE0     		b	.L6
+ 103              	.LVL13:
+ 104              	.L25:
+ 105              	.LBB2:
+ 228:Core/Src/stm32f4xx_hal_gpio.c ****       }
+ 229:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 230:Core/Src/stm32f4xx_hal_gpio.c ****       /* Configure IO Direction mode (Input, Output, Alternate or Analog) */
+ 231:Core/Src/stm32f4xx_hal_gpio.c ****       temp = GPIOx->MODER;
+ 232:Core/Src/stm32f4xx_hal_gpio.c ****       temp &= ~(GPIO_MODER_MODER0 << (position * 2U));
+ 233:Core/Src/stm32f4xx_hal_gpio.c ****       temp |= ((GPIO_Init->Mode & GPIO_MODE) << (position * 2U));
+ 234:Core/Src/stm32f4xx_hal_gpio.c ****       GPIOx->MODER = temp;
+ 235:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 236:Core/Src/stm32f4xx_hal_gpio.c ****       /*--------------------- EXTI Mode Configuration ------------------------*/
+ 237:Core/Src/stm32f4xx_hal_gpio.c ****       /* Configure the External Interrupt or event for the current IO */
+ 238:Core/Src/stm32f4xx_hal_gpio.c ****       if((GPIO_Init->Mode & EXTI_MODE) != 0x00U)
+ARM GAS  C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s 			page 7
+
+
+ 239:Core/Src/stm32f4xx_hal_gpio.c ****       {
+ 240:Core/Src/stm32f4xx_hal_gpio.c ****         /* Enable SYSCFG Clock */
+ 241:Core/Src/stm32f4xx_hal_gpio.c ****         __HAL_RCC_SYSCFG_CLK_ENABLE();
+ 242:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 243:Core/Src/stm32f4xx_hal_gpio.c ****         temp = SYSCFG->EXTICR[position >> 2U];
+ 244:Core/Src/stm32f4xx_hal_gpio.c ****         temp &= ~(0x0FU << (4U * (position & 0x03U)));
+ 245:Core/Src/stm32f4xx_hal_gpio.c ****         temp |= ((uint32_t)(GPIO_GET_INDEX(GPIOx)) << (4U * (position & 0x03U)));
+ 106              		.loc 1 245 0
+ 107 005c 0721     		movs	r1, #7
+ 108 005e 00E0     		b	.L7
+ 109              	.L13:
+ 110 0060 0021     		movs	r1, #0
+ 111              	.L7:
+ 112              		.loc 1 245 0 is_stmt 0 discriminator 32
+ 113 0062 01FA0EF1 		lsl	r1, r1, lr
+ 114 0066 0A43     		orrs	r2, r2, r1
+ 115              	.LVL14:
+ 246:Core/Src/stm32f4xx_hal_gpio.c ****         SYSCFG->EXTICR[position >> 2U] = temp;
+ 116              		.loc 1 246 0 is_stmt 1 discriminator 32
+ 117 0068 0233     		adds	r3, r3, #2
+ 118 006a 5149     		ldr	r1, .L26
+ 119 006c 41F82320 		str	r2, [r1, r3, lsl #2]
+ 247:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 248:Core/Src/stm32f4xx_hal_gpio.c ****         /* Clear Rising Falling edge configuration */
+ 249:Core/Src/stm32f4xx_hal_gpio.c ****         temp = EXTI->RTSR;
+ 120              		.loc 1 249 0 discriminator 32
+ 121 0070 504B     		ldr	r3, .L26+4
+ 122 0072 9A68     		ldr	r2, [r3, #8]
+ 123              	.LVL15:
+ 250:Core/Src/stm32f4xx_hal_gpio.c ****         temp &= ~((uint32_t)iocurrent);
+ 124              		.loc 1 250 0 discriminator 32
+ 125 0074 EB43     		mvns	r3, r5
+ 126 0076 02EA0301 		and	r1, r2, r3
+ 127              	.LVL16:
+ 251:Core/Src/stm32f4xx_hal_gpio.c ****         if((GPIO_Init->Mode & TRIGGER_RISING) != 0x00U)
+ 128              		.loc 1 251 0 discriminator 32
+ 129 007a 7068     		ldr	r0, [r6, #4]
+ 130 007c 10F4801F 		tst	r0, #1048576
+ 131 0080 01D0     		beq	.L8
+ 252:Core/Src/stm32f4xx_hal_gpio.c ****         {
+ 253:Core/Src/stm32f4xx_hal_gpio.c ****           temp |= iocurrent;
+ 132              		.loc 1 253 0
+ 133 0082 45EA0201 		orr	r1, r5, r2
+ 134              	.LVL17:
+ 135              	.L8:
+ 254:Core/Src/stm32f4xx_hal_gpio.c ****         }
+ 255:Core/Src/stm32f4xx_hal_gpio.c ****         EXTI->RTSR = temp;
+ 136              		.loc 1 255 0
+ 137 0086 4B4A     		ldr	r2, .L26+4
+ 138 0088 9160     		str	r1, [r2, #8]
+ 256:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 257:Core/Src/stm32f4xx_hal_gpio.c ****         temp = EXTI->FTSR;
+ 139              		.loc 1 257 0
+ 140 008a D268     		ldr	r2, [r2, #12]
+ 141              	.LVL18:
+ 258:Core/Src/stm32f4xx_hal_gpio.c ****         temp &= ~((uint32_t)iocurrent);
+ 142              		.loc 1 258 0
+ARM GAS  C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s 			page 8
+
+
+ 143 008c 03EA0201 		and	r1, r3, r2
+ 144              	.LVL19:
+ 259:Core/Src/stm32f4xx_hal_gpio.c ****         if((GPIO_Init->Mode & TRIGGER_FALLING) != 0x00U)
+ 145              		.loc 1 259 0
+ 146 0090 7068     		ldr	r0, [r6, #4]
+ 147 0092 10F4001F 		tst	r0, #2097152
+ 148 0096 01D0     		beq	.L9
+ 260:Core/Src/stm32f4xx_hal_gpio.c ****         {
+ 261:Core/Src/stm32f4xx_hal_gpio.c ****           temp |= iocurrent;
+ 149              		.loc 1 261 0
+ 150 0098 45EA0201 		orr	r1, r5, r2
+ 151              	.LVL20:
+ 152              	.L9:
+ 262:Core/Src/stm32f4xx_hal_gpio.c ****         }
+ 263:Core/Src/stm32f4xx_hal_gpio.c ****         EXTI->FTSR = temp;
+ 153              		.loc 1 263 0
+ 154 009c 454A     		ldr	r2, .L26+4
+ 155 009e D160     		str	r1, [r2, #12]
+ 264:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 265:Core/Src/stm32f4xx_hal_gpio.c ****         temp = EXTI->EMR;
+ 156              		.loc 1 265 0
+ 157 00a0 5268     		ldr	r2, [r2, #4]
+ 158              	.LVL21:
+ 266:Core/Src/stm32f4xx_hal_gpio.c ****         temp &= ~((uint32_t)iocurrent);
+ 159              		.loc 1 266 0
+ 160 00a2 03EA0201 		and	r1, r3, r2
+ 161              	.LVL22:
+ 267:Core/Src/stm32f4xx_hal_gpio.c ****         if((GPIO_Init->Mode & EXTI_EVT) != 0x00U)
+ 162              		.loc 1 267 0
+ 163 00a6 7068     		ldr	r0, [r6, #4]
+ 164 00a8 10F4003F 		tst	r0, #131072
+ 165 00ac 01D0     		beq	.L10
+ 268:Core/Src/stm32f4xx_hal_gpio.c ****         {
+ 269:Core/Src/stm32f4xx_hal_gpio.c ****           temp |= iocurrent;
+ 166              		.loc 1 269 0
+ 167 00ae 45EA0201 		orr	r1, r5, r2
+ 168              	.LVL23:
+ 169              	.L10:
+ 270:Core/Src/stm32f4xx_hal_gpio.c ****         }
+ 271:Core/Src/stm32f4xx_hal_gpio.c ****         EXTI->EMR = temp;
+ 170              		.loc 1 271 0
+ 171 00b2 404A     		ldr	r2, .L26+4
+ 172 00b4 5160     		str	r1, [r2, #4]
+ 272:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 273:Core/Src/stm32f4xx_hal_gpio.c ****         /* Clear EXTI line configuration */
+ 274:Core/Src/stm32f4xx_hal_gpio.c ****         temp = EXTI->IMR;
+ 173              		.loc 1 274 0
+ 174 00b6 1268     		ldr	r2, [r2]
+ 175              	.LVL24:
+ 275:Core/Src/stm32f4xx_hal_gpio.c ****         temp &= ~((uint32_t)iocurrent);
+ 176              		.loc 1 275 0
+ 177 00b8 1340     		ands	r3, r3, r2
+ 178              	.LVL25:
+ 276:Core/Src/stm32f4xx_hal_gpio.c ****         if((GPIO_Init->Mode & EXTI_IT) != 0x00U)
+ 179              		.loc 1 276 0
+ 180 00ba 7168     		ldr	r1, [r6, #4]
+ 181 00bc 11F4803F 		tst	r1, #65536
+ARM GAS  C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s 			page 9
+
+
+ 182 00c0 01D0     		beq	.L11
+ 277:Core/Src/stm32f4xx_hal_gpio.c ****         {
+ 278:Core/Src/stm32f4xx_hal_gpio.c ****           temp |= iocurrent;
+ 183              		.loc 1 278 0
+ 184 00c2 45EA0203 		orr	r3, r5, r2
+ 185              	.LVL26:
+ 186              	.L11:
+ 279:Core/Src/stm32f4xx_hal_gpio.c ****         }
+ 280:Core/Src/stm32f4xx_hal_gpio.c ****         EXTI->IMR = temp;
+ 187              		.loc 1 280 0
+ 188 00c6 3B4A     		ldr	r2, .L26+4
+ 189 00c8 1360     		str	r3, [r2]
+ 190              	.LVL27:
+ 191              	.L3:
+ 192              	.LBE2:
+ 177:Core/Src/stm32f4xx_hal_gpio.c ****   {
+ 193              		.loc 1 177 0 discriminator 2
+ 194 00ca 0134     		adds	r4, r4, #1
+ 195              	.LVL28:
+ 196              	.L2:
+ 177:Core/Src/stm32f4xx_hal_gpio.c ****   {
+ 197              		.loc 1 177 0 is_stmt 0 discriminator 1
+ 198 00cc 0F2C     		cmp	r4, #15
+ 199 00ce 6DD8     		bhi	.L22
+ 180:Core/Src/stm32f4xx_hal_gpio.c ****     /* Get the current IO position */
+ 200              		.loc 1 180 0 is_stmt 1
+ 201 00d0 0123     		movs	r3, #1
+ 202 00d2 A340     		lsls	r3, r3, r4
+ 203              	.LVL29:
+ 182:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 204              		.loc 1 182 0
+ 205 00d4 3268     		ldr	r2, [r6]
+ 206 00d6 03EA0205 		and	r5, r3, r2
+ 207              	.LVL30:
+ 184:Core/Src/stm32f4xx_hal_gpio.c ****     {
+ 208              		.loc 1 184 0
+ 209 00da AB42     		cmp	r3, r5
+ 210 00dc F5D1     		bne	.L3
+ 188:Core/Src/stm32f4xx_hal_gpio.c ****           (GPIO_Init->Mode & GPIO_MODE) == MODE_AF)
+ 211              		.loc 1 188 0
+ 212 00de 7268     		ldr	r2, [r6, #4]
+ 213 00e0 02F00302 		and	r2, r2, #3
+ 214 00e4 013A     		subs	r2, r2, #1
+ 215 00e6 012A     		cmp	r2, #1
+ 216 00e8 8FD9     		bls	.L23
+ 217              	.LVL31:
+ 218              	.L4:
+ 206:Core/Src/stm32f4xx_hal_gpio.c ****       {
+ 219              		.loc 1 206 0
+ 220 00ea 7368     		ldr	r3, [r6, #4]
+ 221 00ec 03F00303 		and	r3, r3, #3
+ 222 00f0 032B     		cmp	r3, #3
+ 223 00f2 09D0     		beq	.L5
+ 212:Core/Src/stm32f4xx_hal_gpio.c ****         temp &= ~(GPIO_PUPDR_PUPDR0 << (position * 2U));
+ 224              		.loc 1 212 0
+ 225 00f4 FB68     		ldr	r3, [r7, #12]
+ 226              	.LVL32:
+ARM GAS  C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s 			page 10
+
+
+ 213:Core/Src/stm32f4xx_hal_gpio.c ****         temp |= ((GPIO_Init->Pull) << (position * 2U));
+ 227              		.loc 1 213 0
+ 228 00f6 6000     		lsls	r0, r4, #1
+ 229 00f8 0321     		movs	r1, #3
+ 230 00fa 8140     		lsls	r1, r1, r0
+ 231 00fc 23EA0103 		bic	r3, r3, r1
+ 232              	.LVL33:
+ 214:Core/Src/stm32f4xx_hal_gpio.c ****         GPIOx->PUPDR = temp;
+ 233              		.loc 1 214 0
+ 234 0100 B268     		ldr	r2, [r6, #8]
+ 235 0102 8240     		lsls	r2, r2, r0
+ 236 0104 1343     		orrs	r3, r3, r2
+ 237              	.LVL34:
+ 215:Core/Src/stm32f4xx_hal_gpio.c ****       }
+ 238              		.loc 1 215 0
+ 239 0106 FB60     		str	r3, [r7, #12]
+ 240              	.LVL35:
+ 241              	.L5:
+ 219:Core/Src/stm32f4xx_hal_gpio.c ****       {
+ 242              		.loc 1 219 0
+ 243 0108 7368     		ldr	r3, [r6, #4]
+ 244 010a 03F00303 		and	r3, r3, #3
+ 245 010e 022B     		cmp	r3, #2
+ 246 0110 92D0     		beq	.L24
+ 247              	.L6:
+ 231:Core/Src/stm32f4xx_hal_gpio.c ****       temp &= ~(GPIO_MODER_MODER0 << (position * 2U));
+ 248              		.loc 1 231 0
+ 249 0112 3B68     		ldr	r3, [r7]
+ 250              	.LVL36:
+ 232:Core/Src/stm32f4xx_hal_gpio.c ****       temp |= ((GPIO_Init->Mode & GPIO_MODE) << (position * 2U));
+ 251              		.loc 1 232 0
+ 252 0114 6000     		lsls	r0, r4, #1
+ 253 0116 0321     		movs	r1, #3
+ 254 0118 8140     		lsls	r1, r1, r0
+ 255 011a 23EA0103 		bic	r3, r3, r1
+ 256              	.LVL37:
+ 233:Core/Src/stm32f4xx_hal_gpio.c ****       GPIOx->MODER = temp;
+ 257              		.loc 1 233 0
+ 258 011e 7268     		ldr	r2, [r6, #4]
+ 259 0120 02F00302 		and	r2, r2, #3
+ 260 0124 8240     		lsls	r2, r2, r0
+ 261 0126 1343     		orrs	r3, r3, r2
+ 262              	.LVL38:
+ 234:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 263              		.loc 1 234 0
+ 264 0128 3B60     		str	r3, [r7]
+ 238:Core/Src/stm32f4xx_hal_gpio.c ****       {
+ 265              		.loc 1 238 0
+ 266 012a 7368     		ldr	r3, [r6, #4]
+ 267              	.LVL39:
+ 268 012c 13F4403F 		tst	r3, #196608
+ 269 0130 CBD0     		beq	.L3
+ 270              	.LBB3:
+ 241:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 271              		.loc 1 241 0
+ 272 0132 FFF7FEFF 		bl	__HAL_RCC_SYSCFG_CLK_ENABLE
+ 273              	.LVL40:
+ARM GAS  C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s 			page 11
+
+
+ 243:Core/Src/stm32f4xx_hal_gpio.c ****         temp &= ~(0x0FU << (4U * (position & 0x03U)));
+ 274              		.loc 1 243 0
+ 275 0136 A308     		lsrs	r3, r4, #2
+ 276 0138 991C     		adds	r1, r3, #2
+ 277 013a 1D4A     		ldr	r2, .L26
+ 278 013c 52F82120 		ldr	r2, [r2, r1, lsl #2]
+ 279              	.LVL41:
+ 244:Core/Src/stm32f4xx_hal_gpio.c ****         temp |= ((uint32_t)(GPIO_GET_INDEX(GPIOx)) << (4U * (position & 0x03U)));
+ 280              		.loc 1 244 0
+ 281 0140 04F00301 		and	r1, r4, #3
+ 282 0144 4FEA810E 		lsl	lr, r1, #2
+ 283 0148 0F21     		movs	r1, #15
+ 284 014a 01FA0EF1 		lsl	r1, r1, lr
+ 285 014e 22EA0102 		bic	r2, r2, r1
+ 286              	.LVL42:
+ 245:Core/Src/stm32f4xx_hal_gpio.c ****         SYSCFG->EXTICR[position >> 2U] = temp;
+ 287              		.loc 1 245 0
+ 288 0152 1948     		ldr	r0, .L26+8
+ 289 0154 8742     		cmp	r7, r0
+ 290 0156 83D0     		beq	.L13
+ 245:Core/Src/stm32f4xx_hal_gpio.c ****         SYSCFG->EXTICR[position >> 2U] = temp;
+ 291              		.loc 1 245 0 is_stmt 0 discriminator 1
+ 292 0158 1849     		ldr	r1, .L26+12
+ 293 015a 8F42     		cmp	r7, r1
+ 294 015c 1AD0     		beq	.L14
+ 245:Core/Src/stm32f4xx_hal_gpio.c ****         SYSCFG->EXTICR[position >> 2U] = temp;
+ 295              		.loc 1 245 0 discriminator 3
+ 296 015e 01F58061 		add	r1, r1, #1024
+ 297 0162 8F42     		cmp	r7, r1
+ 298 0164 18D0     		beq	.L15
+ 245:Core/Src/stm32f4xx_hal_gpio.c ****         SYSCFG->EXTICR[position >> 2U] = temp;
+ 299              		.loc 1 245 0 discriminator 5
+ 300 0166 01F58061 		add	r1, r1, #1024
+ 301 016a 8F42     		cmp	r7, r1
+ 302 016c 16D0     		beq	.L16
+ 245:Core/Src/stm32f4xx_hal_gpio.c ****         SYSCFG->EXTICR[position >> 2U] = temp;
+ 303              		.loc 1 245 0 discriminator 7
+ 304 016e 01F58061 		add	r1, r1, #1024
+ 305 0172 8F42     		cmp	r7, r1
+ 306 0174 14D0     		beq	.L17
+ 245:Core/Src/stm32f4xx_hal_gpio.c ****         SYSCFG->EXTICR[position >> 2U] = temp;
+ 307              		.loc 1 245 0 discriminator 9
+ 308 0176 01F58061 		add	r1, r1, #1024
+ 309 017a 8F42     		cmp	r7, r1
+ 310 017c 12D0     		beq	.L18
+ 245:Core/Src/stm32f4xx_hal_gpio.c ****         SYSCFG->EXTICR[position >> 2U] = temp;
+ 311              		.loc 1 245 0 discriminator 11
+ 312 017e 01F58061 		add	r1, r1, #1024
+ 313 0182 8F42     		cmp	r7, r1
+ 314 0184 10D0     		beq	.L19
+ 245:Core/Src/stm32f4xx_hal_gpio.c ****         SYSCFG->EXTICR[position >> 2U] = temp;
+ 315              		.loc 1 245 0 discriminator 13
+ 316 0186 01F58061 		add	r1, r1, #1024
+ 317 018a 8F42     		cmp	r7, r1
+ 318 018c 3FF466AF 		beq	.L25
+ 245:Core/Src/stm32f4xx_hal_gpio.c ****         SYSCFG->EXTICR[position >> 2U] = temp;
+ 319              		.loc 1 245 0
+ARM GAS  C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s 			page 12
+
+
+ 320 0190 0821     		movs	r1, #8
+ 321 0192 66E7     		b	.L7
+ 322              	.L14:
+ 323 0194 0121     		movs	r1, #1
+ 324              	.LVL43:
+ 325 0196 64E7     		b	.L7
+ 326              	.LVL44:
+ 327              	.L15:
+ 328 0198 0221     		movs	r1, #2
+ 329 019a 62E7     		b	.L7
+ 330              	.L16:
+ 331 019c 0321     		movs	r1, #3
+ 332 019e 60E7     		b	.L7
+ 333              	.L17:
+ 334 01a0 0421     		movs	r1, #4
+ 335 01a2 5EE7     		b	.L7
+ 336              	.L18:
+ 337 01a4 0521     		movs	r1, #5
+ 338 01a6 5CE7     		b	.L7
+ 339              	.L19:
+ 340 01a8 0621     		movs	r1, #6
+ 341 01aa 5AE7     		b	.L7
+ 342              	.LVL45:
+ 343              	.L22:
+ 344              	.LBE3:
+ 281:Core/Src/stm32f4xx_hal_gpio.c ****       }
+ 282:Core/Src/stm32f4xx_hal_gpio.c ****     }
+ 283:Core/Src/stm32f4xx_hal_gpio.c ****   }
+ 284:Core/Src/stm32f4xx_hal_gpio.c **** }
+ 345              		.loc 1 284 0 is_stmt 1
+ 346 01ac F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 347              	.LVL46:
+ 348              	.L27:
+ 349 01ae 00BF     		.align	2
+ 350              	.L26:
+ 351 01b0 00380140 		.word	1073821696
+ 352 01b4 003C0140 		.word	1073822720
+ 353 01b8 00000240 		.word	1073872896
+ 354 01bc 00040240 		.word	1073873920
+ 355              		.cfi_endproc
+ 356              	.LFE130:
+ 358              		.section	.text.HAL_GPIO_DeInit,"ax",%progbits
+ 359              		.align	1
+ 360              		.global	HAL_GPIO_DeInit
+ 361              		.syntax unified
+ 362              		.thumb
+ 363              		.thumb_func
+ 364              		.fpu fpv4-sp-d16
+ 366              	HAL_GPIO_DeInit:
+ 367              	.LFB131:
+ 285:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 286:Core/Src/stm32f4xx_hal_gpio.c **** /**
+ 287:Core/Src/stm32f4xx_hal_gpio.c ****   * @brief  De-initializes the GPIOx peripheral registers to their default reset values.
+ 288:Core/Src/stm32f4xx_hal_gpio.c ****   * @param  GPIOx where x can be (A..K) to select the GPIO peripheral for STM32F429X device or
+ 289:Core/Src/stm32f4xx_hal_gpio.c ****   *                      x can be (A..I) to select the GPIO peripheral for STM32F40XX and STM32F427
+ 290:Core/Src/stm32f4xx_hal_gpio.c ****   * @param  GPIO_Pin specifies the port bit to be written.
+ 291:Core/Src/stm32f4xx_hal_gpio.c ****   *          This parameter can be one of GPIO_PIN_x where x can be (0..15).
+ARM GAS  C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s 			page 13
+
+
+ 292:Core/Src/stm32f4xx_hal_gpio.c ****   * @retval None
+ 293:Core/Src/stm32f4xx_hal_gpio.c ****   */
+ 294:Core/Src/stm32f4xx_hal_gpio.c **** void HAL_GPIO_DeInit(GPIO_TypeDef  *GPIOx, uint32_t GPIO_Pin)
+ 295:Core/Src/stm32f4xx_hal_gpio.c **** {
+ 368              		.loc 1 295 0
+ 369              		.cfi_startproc
+ 370              		@ args = 0, pretend = 0, frame = 0
+ 371              		@ frame_needed = 0, uses_anonymous_args = 0
+ 372              	.LVL47:
+ 296:Core/Src/stm32f4xx_hal_gpio.c ****   uint32_t position;
+ 297:Core/Src/stm32f4xx_hal_gpio.c ****   uint32_t ioposition = 0x00U;
+ 298:Core/Src/stm32f4xx_hal_gpio.c ****   uint32_t iocurrent = 0x00U;
+ 299:Core/Src/stm32f4xx_hal_gpio.c ****   uint32_t tmp = 0x00U;
+ 300:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 301:Core/Src/stm32f4xx_hal_gpio.c ****   /* Check the parameters */
+ 302:Core/Src/stm32f4xx_hal_gpio.c ****   assert_param(IS_GPIO_ALL_INSTANCE(GPIOx));
+ 303:Core/Src/stm32f4xx_hal_gpio.c ****   
+ 304:Core/Src/stm32f4xx_hal_gpio.c ****   /* Configure the port pins */
+ 305:Core/Src/stm32f4xx_hal_gpio.c ****   for(position = 0U; position < GPIO_NUMBER; position++)
+ 373              		.loc 1 305 0
+ 374 0000 0023     		movs	r3, #0
+ 375              	.LVL48:
+ 376 0002 0F2B     		cmp	r3, #15
+ 377 0004 00F28F80 		bhi	.L45
+ 295:Core/Src/stm32f4xx_hal_gpio.c ****   uint32_t position;
+ 378              		.loc 1 295 0
+ 379 0008 F0B5     		push	{r4, r5, r6, r7, lr}
+ 380              	.LCFI1:
+ 381              		.cfi_def_cfa_offset 20
+ 382              		.cfi_offset 4, -20
+ 383              		.cfi_offset 5, -16
+ 384              		.cfi_offset 6, -12
+ 385              		.cfi_offset 7, -8
+ 386              		.cfi_offset 14, -4
+ 387 000a 2BE0     		b	.L33
+ 388              	.LVL49:
+ 389              	.L48:
+ 306:Core/Src/stm32f4xx_hal_gpio.c ****   {
+ 307:Core/Src/stm32f4xx_hal_gpio.c ****     /* Get the IO position */
+ 308:Core/Src/stm32f4xx_hal_gpio.c ****     ioposition = 0x01U << position;
+ 309:Core/Src/stm32f4xx_hal_gpio.c ****     /* Get the current IO position */
+ 310:Core/Src/stm32f4xx_hal_gpio.c ****     iocurrent = (GPIO_Pin) & ioposition;
+ 311:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 312:Core/Src/stm32f4xx_hal_gpio.c ****     if(iocurrent == ioposition)
+ 313:Core/Src/stm32f4xx_hal_gpio.c ****     {
+ 314:Core/Src/stm32f4xx_hal_gpio.c ****       /*------------------------- EXTI Mode Configuration --------------------*/
+ 315:Core/Src/stm32f4xx_hal_gpio.c ****       tmp = SYSCFG->EXTICR[position >> 2U];
+ 316:Core/Src/stm32f4xx_hal_gpio.c ****       tmp &= (0x0FU << (4U * (position & 0x03U)));
+ 317:Core/Src/stm32f4xx_hal_gpio.c ****       if(tmp == ((uint32_t)(GPIO_GET_INDEX(GPIOx)) << (4U * (position & 0x03U))))
+ 390              		.loc 1 317 0
+ 391 000c 4FF0070E 		mov	lr, #7
+ 392 0010 01E0     		b	.L31
+ 393              	.L34:
+ 394 0012 4FF0000E 		mov	lr, #0
+ 395              	.L31:
+ 396              		.loc 1 317 0 is_stmt 0 discriminator 32
+ 397 0016 0EFA05F5 		lsl	r5, lr, r5
+ARM GAS  C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s 			page 14
+
+
+ 398 001a AF42     		cmp	r7, r5
+ 399 001c 6AD0     		beq	.L46
+ 400              	.LVL50:
+ 401              	.L32:
+ 318:Core/Src/stm32f4xx_hal_gpio.c ****       {
+ 319:Core/Src/stm32f4xx_hal_gpio.c ****         /* Clear EXTI line configuration */
+ 320:Core/Src/stm32f4xx_hal_gpio.c ****         EXTI->IMR &= ~((uint32_t)iocurrent);
+ 321:Core/Src/stm32f4xx_hal_gpio.c ****         EXTI->EMR &= ~((uint32_t)iocurrent);
+ 322:Core/Src/stm32f4xx_hal_gpio.c ****         
+ 323:Core/Src/stm32f4xx_hal_gpio.c ****         /* Clear Rising Falling edge configuration */
+ 324:Core/Src/stm32f4xx_hal_gpio.c ****         EXTI->FTSR &= ~((uint32_t)iocurrent);
+ 325:Core/Src/stm32f4xx_hal_gpio.c ****         EXTI->RTSR &= ~((uint32_t)iocurrent);
+ 326:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 327:Core/Src/stm32f4xx_hal_gpio.c ****         /* Configure the External Interrupt or event for the current IO */
+ 328:Core/Src/stm32f4xx_hal_gpio.c ****         tmp = 0x0FU << (4U * (position & 0x03U));
+ 329:Core/Src/stm32f4xx_hal_gpio.c ****         SYSCFG->EXTICR[position >> 2U] &= ~tmp;
+ 330:Core/Src/stm32f4xx_hal_gpio.c ****       }
+ 331:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 332:Core/Src/stm32f4xx_hal_gpio.c ****       /*------------------------- GPIO Mode Configuration --------------------*/
+ 333:Core/Src/stm32f4xx_hal_gpio.c ****       /* Configure IO Direction in Input Floating Mode */
+ 334:Core/Src/stm32f4xx_hal_gpio.c ****       GPIOx->MODER &= ~(GPIO_MODER_MODER0 << (position * 2U));
+ 402              		.loc 1 334 0 is_stmt 1
+ 403 001e 0568     		ldr	r5, [r0]
+ 404 0020 5E00     		lsls	r6, r3, #1
+ 405 0022 0324     		movs	r4, #3
+ 406 0024 B440     		lsls	r4, r4, r6
+ 407 0026 E443     		mvns	r4, r4
+ 408 0028 2540     		ands	r5, r5, r4
+ 409 002a 0560     		str	r5, [r0]
+ 335:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 336:Core/Src/stm32f4xx_hal_gpio.c ****       /* Configure the default Alternate Function in current IO */
+ 337:Core/Src/stm32f4xx_hal_gpio.c ****       GPIOx->AFR[position >> 3U] &= ~(0xFU << ((uint32_t)(position & 0x07U) * 4U)) ;
+ 410              		.loc 1 337 0
+ 411 002c DD08     		lsrs	r5, r3, #3
+ 412 002e 0835     		adds	r5, r5, #8
+ 413 0030 50F82560 		ldr	r6, [r0, r5, lsl #2]
+ 414 0034 03F00707 		and	r7, r3, #7
+ 415 0038 4FEA870E 		lsl	lr, r7, #2
+ 416 003c 0F27     		movs	r7, #15
+ 417 003e 07FA0EF7 		lsl	r7, r7, lr
+ 418 0042 26EA0706 		bic	r6, r6, r7
+ 419 0046 40F82560 		str	r6, [r0, r5, lsl #2]
+ 338:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 339:Core/Src/stm32f4xx_hal_gpio.c ****       /* Deactivate the Pull-up and Pull-down resistor for the current IO */
+ 340:Core/Src/stm32f4xx_hal_gpio.c ****       GPIOx->PUPDR &= ~(GPIO_PUPDR_PUPDR0 << (position * 2U));
+ 420              		.loc 1 340 0
+ 421 004a C568     		ldr	r5, [r0, #12]
+ 422 004c 2540     		ands	r5, r5, r4
+ 423 004e C560     		str	r5, [r0, #12]
+ 341:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 342:Core/Src/stm32f4xx_hal_gpio.c ****       /* Configure the default value IO Output Type */
+ 343:Core/Src/stm32f4xx_hal_gpio.c ****       GPIOx->OTYPER  &= ~(GPIO_OTYPER_OT_0 << position) ;
+ 424              		.loc 1 343 0
+ 425 0050 4568     		ldr	r5, [r0, #4]
+ 426 0052 25EA0202 		bic	r2, r5, r2
+ 427              	.LVL51:
+ 428 0056 4260     		str	r2, [r0, #4]
+ARM GAS  C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s 			page 15
+
+
+ 344:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 345:Core/Src/stm32f4xx_hal_gpio.c ****       /* Configure the default value for IO Speed */
+ 346:Core/Src/stm32f4xx_hal_gpio.c ****       GPIOx->OSPEEDR &= ~(GPIO_OSPEEDER_OSPEEDR0 << (position * 2U));
+ 429              		.loc 1 346 0
+ 430 0058 8268     		ldr	r2, [r0, #8]
+ 431 005a 1440     		ands	r4, r4, r2
+ 432 005c 8460     		str	r4, [r0, #8]
+ 433              	.L30:
+ 305:Core/Src/stm32f4xx_hal_gpio.c ****   {
+ 434              		.loc 1 305 0 discriminator 2
+ 435 005e 0133     		adds	r3, r3, #1
+ 436              	.LVL52:
+ 437 0060 0F2B     		cmp	r3, #15
+ 438 0062 5FD8     		bhi	.L47
+ 439              	.LVL53:
+ 440              	.L33:
+ 308:Core/Src/stm32f4xx_hal_gpio.c ****     /* Get the current IO position */
+ 441              		.loc 1 308 0
+ 442 0064 0122     		movs	r2, #1
+ 443 0066 9A40     		lsls	r2, r2, r3
+ 444              	.LVL54:
+ 310:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 445              		.loc 1 310 0
+ 446 0068 02EA0104 		and	r4, r2, r1
+ 447              	.LVL55:
+ 312:Core/Src/stm32f4xx_hal_gpio.c ****     {
+ 448              		.loc 1 312 0
+ 449 006c A242     		cmp	r2, r4
+ 450 006e F6D1     		bne	.L30
+ 315:Core/Src/stm32f4xx_hal_gpio.c ****       tmp &= (0x0FU << (4U * (position & 0x03U)));
+ 451              		.loc 1 315 0
+ 452 0070 4FEA930C 		lsr	ip, r3, #2
+ 453 0074 0CF10206 		add	r6, ip, #2
+ 454 0078 2B4D     		ldr	r5, .L49
+ 455 007a 55F82670 		ldr	r7, [r5, r6, lsl #2]
+ 456              	.LVL56:
+ 316:Core/Src/stm32f4xx_hal_gpio.c ****       if(tmp == ((uint32_t)(GPIO_GET_INDEX(GPIOx)) << (4U * (position & 0x03U))))
+ 457              		.loc 1 316 0
+ 458 007e 03F00305 		and	r5, r3, #3
+ 459 0082 AD00     		lsls	r5, r5, #2
+ 460 0084 0F26     		movs	r6, #15
+ 461 0086 AE40     		lsls	r6, r6, r5
+ 462 0088 3740     		ands	r7, r7, r6
+ 463              	.LVL57:
+ 317:Core/Src/stm32f4xx_hal_gpio.c ****       {
+ 464              		.loc 1 317 0
+ 465 008a DFF8A4E0 		ldr	lr, .L49+8
+ 466 008e 7045     		cmp	r0, lr
+ 467 0090 BFD0     		beq	.L34
+ 317:Core/Src/stm32f4xx_hal_gpio.c ****       {
+ 468              		.loc 1 317 0 is_stmt 0 discriminator 1
+ 469 0092 0EF5806E 		add	lr, lr, #1024
+ 470 0096 7045     		cmp	r0, lr
+ 471 0098 1AD0     		beq	.L35
+ 317:Core/Src/stm32f4xx_hal_gpio.c ****       {
+ 472              		.loc 1 317 0 discriminator 3
+ 473 009a 0EF5806E 		add	lr, lr, #1024
+ARM GAS  C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s 			page 16
+
+
+ 474 009e 7045     		cmp	r0, lr
+ 475 00a0 19D0     		beq	.L36
+ 317:Core/Src/stm32f4xx_hal_gpio.c ****       {
+ 476              		.loc 1 317 0 discriminator 5
+ 477 00a2 0EF5806E 		add	lr, lr, #1024
+ 478 00a6 7045     		cmp	r0, lr
+ 479 00a8 18D0     		beq	.L37
+ 317:Core/Src/stm32f4xx_hal_gpio.c ****       {
+ 480              		.loc 1 317 0 discriminator 7
+ 481 00aa 0EF5806E 		add	lr, lr, #1024
+ 482 00ae 7045     		cmp	r0, lr
+ 483 00b0 17D0     		beq	.L38
+ 317:Core/Src/stm32f4xx_hal_gpio.c ****       {
+ 484              		.loc 1 317 0 discriminator 9
+ 485 00b2 0EF5806E 		add	lr, lr, #1024
+ 486 00b6 7045     		cmp	r0, lr
+ 487 00b8 16D0     		beq	.L39
+ 317:Core/Src/stm32f4xx_hal_gpio.c ****       {
+ 488              		.loc 1 317 0 discriminator 11
+ 489 00ba 0EF5806E 		add	lr, lr, #1024
+ 490 00be 7045     		cmp	r0, lr
+ 491 00c0 15D0     		beq	.L40
+ 317:Core/Src/stm32f4xx_hal_gpio.c ****       {
+ 492              		.loc 1 317 0 discriminator 13
+ 493 00c2 0EF5806E 		add	lr, lr, #1024
+ 494 00c6 7045     		cmp	r0, lr
+ 495 00c8 A0D0     		beq	.L48
+ 317:Core/Src/stm32f4xx_hal_gpio.c ****       {
+ 496              		.loc 1 317 0
+ 497 00ca 4FF0080E 		mov	lr, #8
+ 498 00ce A2E7     		b	.L31
+ 499              	.L35:
+ 500 00d0 4FF0010E 		mov	lr, #1
+ 501 00d4 9FE7     		b	.L31
+ 502              	.L36:
+ 503 00d6 4FF0020E 		mov	lr, #2
+ 504 00da 9CE7     		b	.L31
+ 505              	.L37:
+ 506 00dc 4FF0030E 		mov	lr, #3
+ 507 00e0 99E7     		b	.L31
+ 508              	.L38:
+ 509 00e2 4FF0040E 		mov	lr, #4
+ 510 00e6 96E7     		b	.L31
+ 511              	.L39:
+ 512 00e8 4FF0050E 		mov	lr, #5
+ 513 00ec 93E7     		b	.L31
+ 514              	.L40:
+ 515 00ee 4FF0060E 		mov	lr, #6
+ 516 00f2 90E7     		b	.L31
+ 517              	.L46:
+ 320:Core/Src/stm32f4xx_hal_gpio.c ****         EXTI->EMR &= ~((uint32_t)iocurrent);
+ 518              		.loc 1 320 0 is_stmt 1
+ 519 00f4 0D4D     		ldr	r5, .L49+4
+ 520 00f6 2F68     		ldr	r7, [r5]
+ 521              	.LVL58:
+ 522 00f8 E443     		mvns	r4, r4
+ 523              	.LVL59:
+ARM GAS  C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s 			page 17
+
+
+ 524 00fa 2740     		ands	r7, r7, r4
+ 525 00fc 2F60     		str	r7, [r5]
+ 321:Core/Src/stm32f4xx_hal_gpio.c ****         
+ 526              		.loc 1 321 0
+ 527 00fe 6F68     		ldr	r7, [r5, #4]
+ 528 0100 2740     		ands	r7, r7, r4
+ 529 0102 6F60     		str	r7, [r5, #4]
+ 324:Core/Src/stm32f4xx_hal_gpio.c ****         EXTI->RTSR &= ~((uint32_t)iocurrent);
+ 530              		.loc 1 324 0
+ 531 0104 EF68     		ldr	r7, [r5, #12]
+ 532 0106 2740     		ands	r7, r7, r4
+ 533 0108 EF60     		str	r7, [r5, #12]
+ 325:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 534              		.loc 1 325 0
+ 535 010a AF68     		ldr	r7, [r5, #8]
+ 536 010c 3C40     		ands	r4, r4, r7
+ 537              	.LVL60:
+ 538 010e AC60     		str	r4, [r5, #8]
+ 539              	.LVL61:
+ 329:Core/Src/stm32f4xx_hal_gpio.c ****       }
+ 540              		.loc 1 329 0
+ 541 0110 054F     		ldr	r7, .L49
+ 542 0112 0CF10204 		add	r4, ip, #2
+ 543 0116 57F82450 		ldr	r5, [r7, r4, lsl #2]
+ 544 011a 25EA0606 		bic	r6, r5, r6
+ 545              	.LVL62:
+ 546 011e 47F82460 		str	r6, [r7, r4, lsl #2]
+ 547 0122 7CE7     		b	.L32
+ 548              	.LVL63:
+ 549              	.L47:
+ 347:Core/Src/stm32f4xx_hal_gpio.c ****     }
+ 348:Core/Src/stm32f4xx_hal_gpio.c ****   }
+ 349:Core/Src/stm32f4xx_hal_gpio.c **** }
+ 550              		.loc 1 349 0
+ 551 0124 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 552              	.LVL64:
+ 553              	.L45:
+ 554              	.LCFI2:
+ 555              		.cfi_def_cfa_offset 0
+ 556              		.cfi_restore 4
+ 557              		.cfi_restore 5
+ 558              		.cfi_restore 6
+ 559              		.cfi_restore 7
+ 560              		.cfi_restore 14
+ 561 0126 7047     		bx	lr
+ 562              	.L50:
+ 563              		.align	2
+ 564              	.L49:
+ 565 0128 00380140 		.word	1073821696
+ 566 012c 003C0140 		.word	1073822720
+ 567 0130 00000240 		.word	1073872896
+ 568              		.cfi_endproc
+ 569              	.LFE131:
+ 571              		.section	.text.HAL_GPIO_ReadPin,"ax",%progbits
+ 572              		.align	1
+ 573              		.global	HAL_GPIO_ReadPin
+ 574              		.syntax unified
+ARM GAS  C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s 			page 18
+
+
+ 575              		.thumb
+ 576              		.thumb_func
+ 577              		.fpu fpv4-sp-d16
+ 579              	HAL_GPIO_ReadPin:
+ 580              	.LFB132:
+ 350:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 351:Core/Src/stm32f4xx_hal_gpio.c **** /**
+ 352:Core/Src/stm32f4xx_hal_gpio.c ****   * @}
+ 353:Core/Src/stm32f4xx_hal_gpio.c ****   */
+ 354:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 355:Core/Src/stm32f4xx_hal_gpio.c **** /** @defgroup GPIO_Exported_Functions_Group2 IO operation functions 
+ 356:Core/Src/stm32f4xx_hal_gpio.c ****   *  @brief   GPIO Read and Write
+ 357:Core/Src/stm32f4xx_hal_gpio.c ****   *
+ 358:Core/Src/stm32f4xx_hal_gpio.c **** @verbatim
+ 359:Core/Src/stm32f4xx_hal_gpio.c ****  ===============================================================================
+ 360:Core/Src/stm32f4xx_hal_gpio.c ****                        ##### IO operation functions #####
+ 361:Core/Src/stm32f4xx_hal_gpio.c ****  ===============================================================================
+ 362:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 363:Core/Src/stm32f4xx_hal_gpio.c **** @endverbatim
+ 364:Core/Src/stm32f4xx_hal_gpio.c ****   * @{
+ 365:Core/Src/stm32f4xx_hal_gpio.c ****   */
+ 366:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 367:Core/Src/stm32f4xx_hal_gpio.c **** /**
+ 368:Core/Src/stm32f4xx_hal_gpio.c ****   * @brief  Reads the specified input port pin.
+ 369:Core/Src/stm32f4xx_hal_gpio.c ****   * @param  GPIOx where x can be (A..K) to select the GPIO peripheral for STM32F429X device or
+ 370:Core/Src/stm32f4xx_hal_gpio.c ****   *                      x can be (A..I) to select the GPIO peripheral for STM32F40XX and STM32F427
+ 371:Core/Src/stm32f4xx_hal_gpio.c ****   * @param  GPIO_Pin specifies the port bit to read.
+ 372:Core/Src/stm32f4xx_hal_gpio.c ****   *         This parameter can be GPIO_PIN_x where x can be (0..15).
+ 373:Core/Src/stm32f4xx_hal_gpio.c ****   * @retval The input port pin value.
+ 374:Core/Src/stm32f4xx_hal_gpio.c ****   */
+ 375:Core/Src/stm32f4xx_hal_gpio.c **** GPIO_PinState HAL_GPIO_ReadPin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
+ 376:Core/Src/stm32f4xx_hal_gpio.c **** {
+ 581              		.loc 1 376 0
+ 582              		.cfi_startproc
+ 583              		@ args = 0, pretend = 0, frame = 0
+ 584              		@ frame_needed = 0, uses_anonymous_args = 0
+ 585              		@ link register save eliminated.
+ 586              	.LVL65:
+ 377:Core/Src/stm32f4xx_hal_gpio.c ****   GPIO_PinState bitstatus;
+ 378:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 379:Core/Src/stm32f4xx_hal_gpio.c ****   /* Check the parameters */
+ 380:Core/Src/stm32f4xx_hal_gpio.c ****   assert_param(IS_GPIO_PIN(GPIO_Pin));
+ 381:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 382:Core/Src/stm32f4xx_hal_gpio.c ****   if((GPIOx->IDR & GPIO_Pin) != (uint32_t)GPIO_PIN_RESET)
+ 587              		.loc 1 382 0
+ 588 0000 0369     		ldr	r3, [r0, #16]
+ 589 0002 1942     		tst	r1, r3
+ 590 0004 01D1     		bne	.L54
+ 383:Core/Src/stm32f4xx_hal_gpio.c ****   {
+ 384:Core/Src/stm32f4xx_hal_gpio.c ****     bitstatus = GPIO_PIN_SET;
+ 385:Core/Src/stm32f4xx_hal_gpio.c ****   }
+ 386:Core/Src/stm32f4xx_hal_gpio.c ****   else
+ 387:Core/Src/stm32f4xx_hal_gpio.c ****   {
+ 388:Core/Src/stm32f4xx_hal_gpio.c ****     bitstatus = GPIO_PIN_RESET;
+ 591              		.loc 1 388 0
+ 592 0006 0020     		movs	r0, #0
+ 593              	.LVL66:
+ARM GAS  C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s 			page 19
+
+
+ 389:Core/Src/stm32f4xx_hal_gpio.c ****   }
+ 390:Core/Src/stm32f4xx_hal_gpio.c ****   return bitstatus;
+ 391:Core/Src/stm32f4xx_hal_gpio.c **** }
+ 594              		.loc 1 391 0
+ 595 0008 7047     		bx	lr
+ 596              	.LVL67:
+ 597              	.L54:
+ 384:Core/Src/stm32f4xx_hal_gpio.c ****   }
+ 598              		.loc 1 384 0
+ 599 000a 0120     		movs	r0, #1
+ 600              	.LVL68:
+ 601 000c 7047     		bx	lr
+ 602              		.cfi_endproc
+ 603              	.LFE132:
+ 605              		.section	.text.HAL_GPIO_WritePin,"ax",%progbits
+ 606              		.align	1
+ 607              		.global	HAL_GPIO_WritePin
+ 608              		.syntax unified
+ 609              		.thumb
+ 610              		.thumb_func
+ 611              		.fpu fpv4-sp-d16
+ 613              	HAL_GPIO_WritePin:
+ 614              	.LFB133:
+ 392:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 393:Core/Src/stm32f4xx_hal_gpio.c **** /**
+ 394:Core/Src/stm32f4xx_hal_gpio.c ****   * @brief  Sets or clears the selected data port bit.
+ 395:Core/Src/stm32f4xx_hal_gpio.c ****   *
+ 396:Core/Src/stm32f4xx_hal_gpio.c ****   * @note   This function uses GPIOx_BSRR register to allow atomic read/modify
+ 397:Core/Src/stm32f4xx_hal_gpio.c ****   *         accesses. In this way, there is no risk of an IRQ occurring between
+ 398:Core/Src/stm32f4xx_hal_gpio.c ****   *         the read and the modify access.
+ 399:Core/Src/stm32f4xx_hal_gpio.c ****   *
+ 400:Core/Src/stm32f4xx_hal_gpio.c ****   * @param  GPIOx where x can be (A..K) to select the GPIO peripheral for STM32F429X device or
+ 401:Core/Src/stm32f4xx_hal_gpio.c ****   *                      x can be (A..I) to select the GPIO peripheral for STM32F40XX and STM32F427
+ 402:Core/Src/stm32f4xx_hal_gpio.c ****   * @param  GPIO_Pin specifies the port bit to be written.
+ 403:Core/Src/stm32f4xx_hal_gpio.c ****   *          This parameter can be one of GPIO_PIN_x where x can be (0..15).
+ 404:Core/Src/stm32f4xx_hal_gpio.c ****   * @param  PinState specifies the value to be written to the selected bit.
+ 405:Core/Src/stm32f4xx_hal_gpio.c ****   *          This parameter can be one of the GPIO_PinState enum values:
+ 406:Core/Src/stm32f4xx_hal_gpio.c ****   *            @arg GPIO_PIN_RESET: to clear the port pin
+ 407:Core/Src/stm32f4xx_hal_gpio.c ****   *            @arg GPIO_PIN_SET: to set the port pin
+ 408:Core/Src/stm32f4xx_hal_gpio.c ****   * @retval None
+ 409:Core/Src/stm32f4xx_hal_gpio.c ****   */
+ 410:Core/Src/stm32f4xx_hal_gpio.c **** void HAL_GPIO_WritePin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, GPIO_PinState PinState)
+ 411:Core/Src/stm32f4xx_hal_gpio.c **** {
+ 615              		.loc 1 411 0
+ 616              		.cfi_startproc
+ 617              		@ args = 0, pretend = 0, frame = 0
+ 618              		@ frame_needed = 0, uses_anonymous_args = 0
+ 619              		@ link register save eliminated.
+ 620              	.LVL69:
+ 412:Core/Src/stm32f4xx_hal_gpio.c ****   /* Check the parameters */
+ 413:Core/Src/stm32f4xx_hal_gpio.c ****   assert_param(IS_GPIO_PIN(GPIO_Pin));
+ 414:Core/Src/stm32f4xx_hal_gpio.c ****   assert_param(IS_GPIO_PIN_ACTION(PinState));
+ 415:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 416:Core/Src/stm32f4xx_hal_gpio.c ****   if(PinState != GPIO_PIN_RESET)
+ 621              		.loc 1 416 0
+ 622 0000 12B9     		cbnz	r2, .L58
+ 417:Core/Src/stm32f4xx_hal_gpio.c ****   {
+ARM GAS  C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s 			page 20
+
+
+ 418:Core/Src/stm32f4xx_hal_gpio.c ****     GPIOx->BSRR = GPIO_Pin;
+ 419:Core/Src/stm32f4xx_hal_gpio.c ****   }
+ 420:Core/Src/stm32f4xx_hal_gpio.c ****   else
+ 421:Core/Src/stm32f4xx_hal_gpio.c ****   {
+ 422:Core/Src/stm32f4xx_hal_gpio.c ****     GPIOx->BSRR = (uint32_t)GPIO_Pin << 16U;
+ 623              		.loc 1 422 0
+ 624 0002 0904     		lsls	r1, r1, #16
+ 625              	.LVL70:
+ 626 0004 8161     		str	r1, [r0, #24]
+ 627 0006 7047     		bx	lr
+ 628              	.LVL71:
+ 629              	.L58:
+ 418:Core/Src/stm32f4xx_hal_gpio.c ****   }
+ 630              		.loc 1 418 0
+ 631 0008 8161     		str	r1, [r0, #24]
+ 632 000a 7047     		bx	lr
+ 633              		.cfi_endproc
+ 634              	.LFE133:
+ 636              		.section	.text.HAL_GPIO_TogglePin,"ax",%progbits
+ 637              		.align	1
+ 638              		.global	HAL_GPIO_TogglePin
+ 639              		.syntax unified
+ 640              		.thumb
+ 641              		.thumb_func
+ 642              		.fpu fpv4-sp-d16
+ 644              	HAL_GPIO_TogglePin:
+ 645              	.LFB134:
+ 423:Core/Src/stm32f4xx_hal_gpio.c ****   }
+ 424:Core/Src/stm32f4xx_hal_gpio.c **** }
+ 425:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 426:Core/Src/stm32f4xx_hal_gpio.c **** /**
+ 427:Core/Src/stm32f4xx_hal_gpio.c ****   * @brief  Toggles the specified GPIO pins.
+ 428:Core/Src/stm32f4xx_hal_gpio.c ****   * @param  GPIOx Where x can be (A..K) to select the GPIO peripheral for STM32F429X device or
+ 429:Core/Src/stm32f4xx_hal_gpio.c ****   *                      x can be (A..I) to select the GPIO peripheral for STM32F40XX and STM32F427
+ 430:Core/Src/stm32f4xx_hal_gpio.c ****   * @param  GPIO_Pin Specifies the pins to be toggled.
+ 431:Core/Src/stm32f4xx_hal_gpio.c ****   * @retval None
+ 432:Core/Src/stm32f4xx_hal_gpio.c ****   */
+ 433:Core/Src/stm32f4xx_hal_gpio.c **** void HAL_GPIO_TogglePin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
+ 434:Core/Src/stm32f4xx_hal_gpio.c **** {
+ 646              		.loc 1 434 0
+ 647              		.cfi_startproc
+ 648              		@ args = 0, pretend = 0, frame = 0
+ 649              		@ frame_needed = 0, uses_anonymous_args = 0
+ 650              		@ link register save eliminated.
+ 651              	.LVL72:
+ 435:Core/Src/stm32f4xx_hal_gpio.c ****   uint32_t odr;
+ 436:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 437:Core/Src/stm32f4xx_hal_gpio.c ****   /* Check the parameters */
+ 438:Core/Src/stm32f4xx_hal_gpio.c ****   assert_param(IS_GPIO_PIN(GPIO_Pin));
+ 439:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 440:Core/Src/stm32f4xx_hal_gpio.c ****   /* get current Output Data Register value */
+ 441:Core/Src/stm32f4xx_hal_gpio.c ****   odr = GPIOx->ODR;
+ 652              		.loc 1 441 0
+ 653 0000 4369     		ldr	r3, [r0, #20]
+ 654              	.LVL73:
+ 442:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 443:Core/Src/stm32f4xx_hal_gpio.c ****   /* Set selected pins that were at low level, and reset ones that were high */
+ARM GAS  C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s 			page 21
+
+
+ 444:Core/Src/stm32f4xx_hal_gpio.c ****   GPIOx->BSRR = ((odr & GPIO_Pin) << GPIO_NUMBER) | (~odr & GPIO_Pin);
+ 655              		.loc 1 444 0
+ 656 0002 03EA0102 		and	r2, r3, r1
+ 657 0006 21EA0301 		bic	r1, r1, r3
+ 658              	.LVL74:
+ 659 000a 41EA0241 		orr	r1, r1, r2, lsl #16
+ 660 000e 8161     		str	r1, [r0, #24]
+ 661 0010 7047     		bx	lr
+ 662              		.cfi_endproc
+ 663              	.LFE134:
+ 665              		.section	.text.HAL_GPIO_LockPin,"ax",%progbits
+ 666              		.align	1
+ 667              		.global	HAL_GPIO_LockPin
+ 668              		.syntax unified
+ 669              		.thumb
+ 670              		.thumb_func
+ 671              		.fpu fpv4-sp-d16
+ 673              	HAL_GPIO_LockPin:
+ 674              	.LFB135:
+ 445:Core/Src/stm32f4xx_hal_gpio.c **** }
+ 446:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 447:Core/Src/stm32f4xx_hal_gpio.c **** /**
+ 448:Core/Src/stm32f4xx_hal_gpio.c ****   * @brief  Locks GPIO Pins configuration registers.
+ 449:Core/Src/stm32f4xx_hal_gpio.c ****   * @note   The locked registers are GPIOx_MODER, GPIOx_OTYPER, GPIOx_OSPEEDR,
+ 450:Core/Src/stm32f4xx_hal_gpio.c ****   *         GPIOx_PUPDR, GPIOx_AFRL and GPIOx_AFRH.
+ 451:Core/Src/stm32f4xx_hal_gpio.c ****   * @note   The configuration of the locked GPIO pins can no longer be modified
+ 452:Core/Src/stm32f4xx_hal_gpio.c ****   *         until the next reset.
+ 453:Core/Src/stm32f4xx_hal_gpio.c ****   * @param  GPIOx where x can be (A..F) to select the GPIO peripheral for STM32F4 family
+ 454:Core/Src/stm32f4xx_hal_gpio.c ****   * @param  GPIO_Pin specifies the port bit to be locked.
+ 455:Core/Src/stm32f4xx_hal_gpio.c ****   *         This parameter can be any combination of GPIO_PIN_x where x can be (0..15).
+ 456:Core/Src/stm32f4xx_hal_gpio.c ****   * @retval None
+ 457:Core/Src/stm32f4xx_hal_gpio.c ****   */
+ 458:Core/Src/stm32f4xx_hal_gpio.c **** HAL_StatusTypeDef HAL_GPIO_LockPin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
+ 459:Core/Src/stm32f4xx_hal_gpio.c **** {
+ 675              		.loc 1 459 0
+ 676              		.cfi_startproc
+ 677              		@ args = 0, pretend = 0, frame = 8
+ 678              		@ frame_needed = 0, uses_anonymous_args = 0
+ 679              		@ link register save eliminated.
+ 680              	.LVL75:
+ 681 0000 82B0     		sub	sp, sp, #8
+ 682              	.LCFI3:
+ 683              		.cfi_def_cfa_offset 8
+ 460:Core/Src/stm32f4xx_hal_gpio.c ****   __IO uint32_t tmp = GPIO_LCKR_LCKK;
+ 684              		.loc 1 460 0
+ 685 0002 4FF48033 		mov	r3, #65536
+ 686 0006 0193     		str	r3, [sp, #4]
+ 461:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 462:Core/Src/stm32f4xx_hal_gpio.c ****   /* Check the parameters */
+ 463:Core/Src/stm32f4xx_hal_gpio.c ****   assert_param(IS_GPIO_PIN(GPIO_Pin));
+ 464:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 465:Core/Src/stm32f4xx_hal_gpio.c ****   /* Apply lock key write sequence */
+ 466:Core/Src/stm32f4xx_hal_gpio.c ****   tmp |= GPIO_Pin;
+ 687              		.loc 1 466 0
+ 688 0008 019B     		ldr	r3, [sp, #4]
+ 689 000a 0B43     		orrs	r3, r3, r1
+ 690 000c 0193     		str	r3, [sp, #4]
+ARM GAS  C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s 			page 22
+
+
+ 467:Core/Src/stm32f4xx_hal_gpio.c ****   /* Set LCKx bit(s): LCKK='1' + LCK[15-0] */
+ 468:Core/Src/stm32f4xx_hal_gpio.c ****   GPIOx->LCKR = tmp;
+ 691              		.loc 1 468 0
+ 692 000e 019B     		ldr	r3, [sp, #4]
+ 693 0010 C361     		str	r3, [r0, #28]
+ 469:Core/Src/stm32f4xx_hal_gpio.c ****   /* Reset LCKx bit(s): LCKK='0' + LCK[15-0] */
+ 470:Core/Src/stm32f4xx_hal_gpio.c ****   GPIOx->LCKR = GPIO_Pin;
+ 694              		.loc 1 470 0
+ 695 0012 C161     		str	r1, [r0, #28]
+ 471:Core/Src/stm32f4xx_hal_gpio.c ****   /* Set LCKx bit(s): LCKK='1' + LCK[15-0] */
+ 472:Core/Src/stm32f4xx_hal_gpio.c ****   GPIOx->LCKR = tmp;
+ 696              		.loc 1 472 0
+ 697 0014 019B     		ldr	r3, [sp, #4]
+ 698 0016 C361     		str	r3, [r0, #28]
+ 473:Core/Src/stm32f4xx_hal_gpio.c ****   /* Read LCKR register. This read is mandatory to complete key lock sequence */
+ 474:Core/Src/stm32f4xx_hal_gpio.c ****   tmp = GPIOx->LCKR;
+ 699              		.loc 1 474 0
+ 700 0018 C369     		ldr	r3, [r0, #28]
+ 701 001a 0193     		str	r3, [sp, #4]
+ 475:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 476:Core/Src/stm32f4xx_hal_gpio.c ****   /* Read again in order to confirm lock is active */
+ 477:Core/Src/stm32f4xx_hal_gpio.c ****  if((GPIOx->LCKR & GPIO_LCKR_LCKK) != RESET)
+ 702              		.loc 1 477 0
+ 703 001c C369     		ldr	r3, [r0, #28]
+ 704 001e 13F4803F 		tst	r3, #65536
+ 705 0022 02D1     		bne	.L64
+ 478:Core/Src/stm32f4xx_hal_gpio.c ****   {
+ 479:Core/Src/stm32f4xx_hal_gpio.c ****     return HAL_OK;
+ 480:Core/Src/stm32f4xx_hal_gpio.c ****   }
+ 481:Core/Src/stm32f4xx_hal_gpio.c ****   else
+ 482:Core/Src/stm32f4xx_hal_gpio.c ****   {
+ 483:Core/Src/stm32f4xx_hal_gpio.c ****     return HAL_ERROR;
+ 706              		.loc 1 483 0
+ 707 0024 0120     		movs	r0, #1
+ 708              	.LVL76:
+ 709              	.L61:
+ 484:Core/Src/stm32f4xx_hal_gpio.c ****   }
+ 485:Core/Src/stm32f4xx_hal_gpio.c **** }
+ 710              		.loc 1 485 0
+ 711 0026 02B0     		add	sp, sp, #8
+ 712              	.LCFI4:
+ 713              		.cfi_remember_state
+ 714              		.cfi_def_cfa_offset 0
+ 715              		@ sp needed
+ 716 0028 7047     		bx	lr
+ 717              	.LVL77:
+ 718              	.L64:
+ 719              	.LCFI5:
+ 720              		.cfi_restore_state
+ 479:Core/Src/stm32f4xx_hal_gpio.c ****   }
+ 721              		.loc 1 479 0
+ 722 002a 0020     		movs	r0, #0
+ 723              	.LVL78:
+ 724 002c FBE7     		b	.L61
+ 725              		.cfi_endproc
+ 726              	.LFE135:
+ 728              		.section	.text.HAL_GPIO_EXTI_Callback,"ax",%progbits
+ARM GAS  C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s 			page 23
+
+
+ 729              		.align	1
+ 730              		.weak	HAL_GPIO_EXTI_Callback
+ 731              		.syntax unified
+ 732              		.thumb
+ 733              		.thumb_func
+ 734              		.fpu fpv4-sp-d16
+ 736              	HAL_GPIO_EXTI_Callback:
+ 737              	.LFB137:
+ 486:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 487:Core/Src/stm32f4xx_hal_gpio.c **** /**
+ 488:Core/Src/stm32f4xx_hal_gpio.c ****   * @brief  This function handles EXTI interrupt request.
+ 489:Core/Src/stm32f4xx_hal_gpio.c ****   * @param  GPIO_Pin Specifies the pins connected EXTI line
+ 490:Core/Src/stm32f4xx_hal_gpio.c ****   * @retval None
+ 491:Core/Src/stm32f4xx_hal_gpio.c ****   */
+ 492:Core/Src/stm32f4xx_hal_gpio.c **** void HAL_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin)
+ 493:Core/Src/stm32f4xx_hal_gpio.c **** {
+ 494:Core/Src/stm32f4xx_hal_gpio.c ****   /* EXTI line interrupt detected */
+ 495:Core/Src/stm32f4xx_hal_gpio.c ****   if(__HAL_GPIO_EXTI_GET_IT(GPIO_Pin) != RESET)
+ 496:Core/Src/stm32f4xx_hal_gpio.c ****   {
+ 497:Core/Src/stm32f4xx_hal_gpio.c ****     __HAL_GPIO_EXTI_CLEAR_IT(GPIO_Pin);
+ 498:Core/Src/stm32f4xx_hal_gpio.c ****     HAL_GPIO_EXTI_Callback(GPIO_Pin);
+ 499:Core/Src/stm32f4xx_hal_gpio.c ****   }
+ 500:Core/Src/stm32f4xx_hal_gpio.c **** }
+ 501:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 502:Core/Src/stm32f4xx_hal_gpio.c **** /**
+ 503:Core/Src/stm32f4xx_hal_gpio.c ****   * @brief  EXTI line detection callbacks.
+ 504:Core/Src/stm32f4xx_hal_gpio.c ****   * @param  GPIO_Pin Specifies the pins connected EXTI line
+ 505:Core/Src/stm32f4xx_hal_gpio.c ****   * @retval None
+ 506:Core/Src/stm32f4xx_hal_gpio.c ****   */
+ 507:Core/Src/stm32f4xx_hal_gpio.c **** __weak void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+ 508:Core/Src/stm32f4xx_hal_gpio.c **** {
+ 738              		.loc 1 508 0
+ 739              		.cfi_startproc
+ 740              		@ args = 0, pretend = 0, frame = 0
+ 741              		@ frame_needed = 0, uses_anonymous_args = 0
+ 742              		@ link register save eliminated.
+ 743              	.LVL79:
+ 744 0000 7047     		bx	lr
+ 745              		.cfi_endproc
+ 746              	.LFE137:
+ 748              		.section	.text.HAL_GPIO_EXTI_IRQHandler,"ax",%progbits
+ 749              		.align	1
+ 750              		.global	HAL_GPIO_EXTI_IRQHandler
+ 751              		.syntax unified
+ 752              		.thumb
+ 753              		.thumb_func
+ 754              		.fpu fpv4-sp-d16
+ 756              	HAL_GPIO_EXTI_IRQHandler:
+ 757              	.LFB136:
+ 493:Core/Src/stm32f4xx_hal_gpio.c ****   /* EXTI line interrupt detected */
+ 758              		.loc 1 493 0
+ 759              		.cfi_startproc
+ 760              		@ args = 0, pretend = 0, frame = 0
+ 761              		@ frame_needed = 0, uses_anonymous_args = 0
+ 762              	.LVL80:
+ 493:Core/Src/stm32f4xx_hal_gpio.c ****   /* EXTI line interrupt detected */
+ 763              		.loc 1 493 0
+ARM GAS  C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s 			page 24
+
+
+ 764 0000 08B5     		push	{r3, lr}
+ 765              	.LCFI6:
+ 766              		.cfi_def_cfa_offset 8
+ 767              		.cfi_offset 3, -8
+ 768              		.cfi_offset 14, -4
+ 495:Core/Src/stm32f4xx_hal_gpio.c ****   {
+ 769              		.loc 1 495 0
+ 770 0002 054B     		ldr	r3, .L70
+ 771 0004 5B69     		ldr	r3, [r3, #20]
+ 772 0006 0342     		tst	r3, r0
+ 773 0008 00D1     		bne	.L69
+ 774              	.LVL81:
+ 775              	.L66:
+ 776 000a 08BD     		pop	{r3, pc}
+ 777              	.LVL82:
+ 778              	.L69:
+ 497:Core/Src/stm32f4xx_hal_gpio.c ****     HAL_GPIO_EXTI_Callback(GPIO_Pin);
+ 779              		.loc 1 497 0
+ 780 000c 024B     		ldr	r3, .L70
+ 781 000e 5861     		str	r0, [r3, #20]
+ 498:Core/Src/stm32f4xx_hal_gpio.c ****   }
+ 782              		.loc 1 498 0
+ 783 0010 FFF7FEFF 		bl	HAL_GPIO_EXTI_Callback
+ 784              	.LVL83:
+ 500:Core/Src/stm32f4xx_hal_gpio.c **** 
+ 785              		.loc 1 500 0
+ 786 0014 F9E7     		b	.L66
+ 787              	.L71:
+ 788 0016 00BF     		.align	2
+ 789              	.L70:
+ 790 0018 003C0140 		.word	1073822720
+ 791              		.cfi_endproc
+ 792              	.LFE136:
+ 794              		.text
+ 795              	.Letext0:
+ 796              		.file 2 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\arm-none-eabi\\include
+ 797              		.file 3 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\arm-none-eabi\\include
+ 798              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
+ 799              		.file 5 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
+ 800              		.file 6 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h"
+ 801              		.file 7 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h"
+ 802              		.file 8 "Core/Inc/stm32f4xx_hal_def.h"
+ 803              		.file 9 "Core/Inc/stm32f4xx_hal_gpio.h"
+ 804              		.file 10 "Core/Inc/stm32f4xx_hal.h"
+ARM GAS  C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s 			page 25
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 stm32f4xx_hal_gpio.c
+C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s:18     .text.HAL_GPIO_Init:00000000 $t
+C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s:25     .text.HAL_GPIO_Init:00000000 HAL_GPIO_Init
+C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s:351    .text.HAL_GPIO_Init:000001b0 $d
+C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s:359    .text.HAL_GPIO_DeInit:00000000 $t
+C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s:366    .text.HAL_GPIO_DeInit:00000000 HAL_GPIO_DeInit
+C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s:565    .text.HAL_GPIO_DeInit:00000128 $d
+C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s:572    .text.HAL_GPIO_ReadPin:00000000 $t
+C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s:579    .text.HAL_GPIO_ReadPin:00000000 HAL_GPIO_ReadPin
+C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s:606    .text.HAL_GPIO_WritePin:00000000 $t
+C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s:613    .text.HAL_GPIO_WritePin:00000000 HAL_GPIO_WritePin
+C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s:637    .text.HAL_GPIO_TogglePin:00000000 $t
+C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s:644    .text.HAL_GPIO_TogglePin:00000000 HAL_GPIO_TogglePin
+C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s:666    .text.HAL_GPIO_LockPin:00000000 $t
+C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s:673    .text.HAL_GPIO_LockPin:00000000 HAL_GPIO_LockPin
+C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s:729    .text.HAL_GPIO_EXTI_Callback:00000000 $t
+C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s:736    .text.HAL_GPIO_EXTI_Callback:00000000 HAL_GPIO_EXTI_Callback
+C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s:749    .text.HAL_GPIO_EXTI_IRQHandler:00000000 $t
+C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s:756    .text.HAL_GPIO_EXTI_IRQHandler:00000000 HAL_GPIO_EXTI_IRQHandler
+C:\Users\mdmt3\AppData\Local\Temp\ccJZtDj0.s:790    .text.HAL_GPIO_EXTI_IRQHandler:00000018 $d
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+__HAL_RCC_SYSCFG_CLK_ENABLE
