@@ -1,0 +1,16 @@
+testuart-f407\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c
+testuart-f407\tasks.o: C:\Keil_v5\ARM\ARM_Compiler_5.06u7\Bin\..\include\stdlib.h
+testuart-f407\tasks.o: C:\Keil_v5\ARM\ARM_Compiler_5.06u7\Bin\..\include\string.h
+testuart-f407\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+testuart-f407\tasks.o: C:\Keil_v5\ARM\ARM_Compiler_5.06u7\Bin\..\include\stddef.h
+testuart-f407\tasks.o: C:\Keil_v5\ARM\ARM_Compiler_5.06u7\Bin\..\include\stdint.h
+testuart-f407\tasks.o: ../Core/Inc/FreeRTOSConfig.h
+testuart-f407\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+testuart-f407\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+testuart-f407\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+testuart-f407\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+testuart-f407\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+testuart-f407\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+testuart-f407\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+testuart-f407\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
+testuart-f407\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/stack_macros.h

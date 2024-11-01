@@ -1,0 +1,26 @@
+--cpu=Cortex-M4.fp.sp
+"testuart-f407\startup_stm32f407xx.o"
+"testuart-f407\main.o"
+"testuart-f407\stm32f4xx_it.o"
+"testuart-f407\stm32f4xx_hal_msp.o"
+"testuart-f407\stm32f4xx_hal_tim.o"
+"testuart-f407\stm32f4xx_hal_tim_ex.o"
+"testuart-f407\stm32f4xx_hal_uart.o"
+"testuart-f407\stm32f4xx_hal_rcc.o"
+"testuart-f407\stm32f4xx_hal_rcc_ex.o"
+"testuart-f407\stm32f4xx_hal_flash.o"
+"testuart-f407\stm32f4xx_hal_flash_ex.o"
+"testuart-f407\stm32f4xx_hal_flash_ramfunc.o"
+"testuart-f407\stm32f4xx_hal_gpio.o"
+"testuart-f407\stm32f4xx_hal_dma_ex.o"
+"testuart-f407\stm32f4xx_hal_dma.o"
+"testuart-f407\stm32f4xx_hal_pwr.o"
+"testuart-f407\stm32f4xx_hal_pwr_ex.o"
+"testuart-f407\stm32f4xx_hal_cortex.o"
+"testuart-f407\stm32f4xx_hal.o"
+"testuart-f407\stm32f4xx_hal_exti.o"
+"testuart-f407\system_stm32f4xx.o"
+--strict --scatter "testUART-F407\testUART-F407.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "testUART-F407.map" -o testUART-F407\testUART-F407.axf

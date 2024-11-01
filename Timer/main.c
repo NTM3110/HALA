@@ -27,7 +27,7 @@ void TIM_Config(){
 	TIM_InitStruct.TIM_CounterMode = TIM_CounterMode_Up;
 
 	TIM_TimeBaseInit(TIM2, &TIM_InitStruct);
-	TIM_Cmd(TIM2, ENABLE);	//Cho phep timer hoat dong
+	TIM_Cmd(TIM2, ENABLE);	//Cho ph?p timer ho?t d?ngd
 }
 
 void delay_ms(uint32_t timedelay)  //	delay 1ms = 1
