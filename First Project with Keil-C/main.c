@@ -25,30 +25,36 @@ int main(void)
    RCC->AHB1ENR |= GPIOAEN;
 
    //2. Set PD13 as output pin (LED3)
-   GPIOD->MODER |= (1U << 26);
-   GPIOD->MODER &= ~(1U <<27);
+		GPIOD->MODER |= (1U << 26);
+		GPIOD->MODER &= ~(1U <<27);
+	
+	
+		GPIOD->OSPEEDR |= (1U << 26);
+		GPIOC->OSPEEDR &= ~ (1U << 27);
+		
+		GPIOD->OTYPER &= ~ (1U <<13);
 
     //3. Set PD12 as output pin (LED4)
    GPIOD->MODER |= (1U << 24);
    GPIOD->MODER &= ~(1U <<25);
-
+		
    GPIOD->MODER |= (1U << 28);
    GPIOD->MODER &= ~(1U << 29);
 
     //4. Set PA0 as input pin (USER_BTN)
    GPIOA->MODER &= ~(1U << 0);
    GPIOA->MODER &= ~(1U << 1);
+	
+	 
 	 int i;
 
    while (1){
 
 	
 		 GPIOD->ODR |= LED3_PIN;
-		 GPIOD->ODR |= LED5_PIN;
 		 delay(3000000);
 	 	
 		 GPIOD->ODR &= ~LED3_PIN;
-		 GPIOD->ODR &= ~LED5_PIN;
 		 delay(3000000);
 	}
 }
