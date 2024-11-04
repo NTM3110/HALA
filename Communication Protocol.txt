@@ -1,0 +1,29 @@
+UART 
+- TX to RX and RX to TX
+START bit: high->low.
+STOP bit: low->high.
+DATA bit: 7 or 8 common, can range from 5-9.
+PARITY bit: check the transmission 
+- odd: number of bit 1 always odd.
+- even: number of bit 1 always even.
+
+I2C:
+- SDA, SCL
+- START condition: SDA goes low before SCL goes low
+- STOP condition: SDA goes high after SCL goes high/
+- 7 address bits + 1 bit ACK
+- 8 data bits + R/W bit + bit ACK.
+- ACK: ACK or NACK indicates that the address peripheral did not respond or unable to process the request.
+- The signal of SDA stays stable in high period of SCL and change in low period of SCL.
+
+SPI:
+-CS, CLK, MOSI, MISO.
+- CS signal will choose which slave to work with and also acts as START and STOP CONDITION.
+- SPI enable user to choose to transmit and receive sampled data at high or low edge of CLK.
+- Idle state of CLK can also be chosen. 
+- clock idle value.
+- MSB or LSB.
+- transmit at positive or negative edge of SPI CLK.
+
+
+
